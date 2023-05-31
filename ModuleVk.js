@@ -27,7 +27,6 @@ export async function InitVk()
 }
 
 
-
 export async function VkPreloadReward()
 {
     await VkActionAds("VKWebAppCheckNativeAds",
@@ -83,9 +82,9 @@ async function VkActionAds(nameApiMethod,
     }
 }
 
-export async function SetIFrameSize()
+export function SetIFrameSize()
 {
-    await vkBridge.send('VKWebAppResizeWindow', {
+    vkBridge.send('VKWebAppResizeWindow', {
         width: document.documentElement.clientWidth < maxWidth ? document.documentElement.clientWidth : maxWidth,
         height: document.documentElement.clientHeight
     });

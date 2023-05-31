@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>X2 Block Match</title>
+    <title>X2 Solitaire Merge-2048 Puzzle</title>
     <link rel="stylesheet" href="TemplateData/style.css">
     <link rel="stylesheet" href="TemplateData/banner.css">
 </head>
@@ -24,7 +24,7 @@
 
 
     <script type="module">
-        const versionBuild = "1.2.0"
+        const versionBuild = "1.0.1"
         import { InitUnityGame, myGameInstance } from './ModuleGame.js';
         import { functionApi, functionApiKeys, InitMapFunctionApi, platform } from './ModulePlatform.js';
         import { GenerateId } from './ModuleRandomId.js';
@@ -43,8 +43,8 @@
             codeUrl: buildUrl + "/Vk.wasm",
                 streamingAssetsUrl: "StreamingAssets",
             companyName: "Uspex",
-            productName: "X2 Block Match",
-            productVersion: "1.2.0",
+            productName: "X2 Solitaire Merge-2048 Puzzle",
+            productVersion: "1.0.1",
             devicePixelRatio: maxPixelRatio
         };
 
@@ -107,23 +107,32 @@
         const script = document.createElement("script");
         script.src = loaderUrl;
         script.async = false;
-        script.onload = function () {
-            
-            InitMapFunctionApi();
-            functionApi.get(functionApiKeys.InitSDK)().then((result) => {
-                let unityInstance = createUnityInstance(canvas, config, (progress) => progressBar.style.width = 100 * progress + "%");
-                return unityInstance;
-            })
-                .then((unityInstance) => {
-                    SetMaxSize();
-                    window.addEventListener('resize', SetMaxSize);
-                    InitUnityGame(unityInstance);
-                    loadingBar.style.display = "none";
-                })
-                .catch((err) => {
-                    console.log(err);
-                    alert(JSON.stringify(err));
-                });;
+        script.onload = async function () {
+            try {
+                InitMapFunctionApi();
+                await functionApi.get(functionApiKeys.InitSDK)();
+                let unityInstance = await createUnityInstance(canvas, config, function (progress) {
+                    progressBar.style.width = 100 * progress + "%";
+                });
+                SetMaxSize();
+                window.addEventListener('resize', SetMaxSize);
+                InitUnityGame(unityInstance);
+                loadingBar.style.display = "none";
+
+                window.addEventListener('beforeunload' , function (e) {
+                    e = e || window.event;
+                    myGameInstance.SendMessage("WebDataManager", "SaveByExit");
+                    if (e) {
+                        e.returnValue = 'Вы точно хотите выйти?';
+                    }
+
+                    return 'Вы точно хотите выйти?';
+                });
+            }
+            catch (e) {
+                console.log(e);
+                alert(e);
+            }
         };
 
         function CreateSdkScriptElement()
@@ -313,6 +322,7 @@
             }
         }
 
+
         function OpenUrlNewTab(url)
         {
             const userAgent = window.navigator.userAgent.toLowerCase();
@@ -328,6 +338,7 @@
             a.click();
             a.remove();
         }
+
 
         document.body.appendChild(script);
     </script>
