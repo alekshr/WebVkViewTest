@@ -155,7 +155,7 @@ export async function VkSaveCloud(jsonData, flush) {
 
                 await fetch("https://api.vk.com/method/storage.set", {
                     method: "POST",
-                    mode: "no-cors",
+                    mode: "cors",
                     credentials: "include",
                     headers:
                     {
@@ -177,7 +177,7 @@ export async function VkSaveCloud(jsonData, flush) {
 
             await fetch("https://api.vk.com/method/storage.set", {
                 method: "POST",
-                mode: "no-cors",
+                mode: "cors",
                 credentials: "include",
                 headers: {
                     "Content-Type": "multipart/form-data",
