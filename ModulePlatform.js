@@ -1,4 +1,4 @@
-import { InitVk, VkPreloadReward, VkPreloadInterstitial, VkShowReward, VkShowInterstitial, VkLoadCloud, VkSaveCloud, VkInviteFriends  } from './ModuleVk.js';
+import { InitVk, VkPreloadReward, VkPreloadInterstitial, VkShowReward, VkShowInterstitial, VkLoadCloud, VkSaveCloud, VkInviteFriends } from './ModuleVk.js';
 
 
 
@@ -23,6 +23,7 @@ export const functionApiKeys = Object.freeze({
     EnviromentData: Symbol("enviromentData"),
     InitPurchase: Symbol("initPurchase"),
     InviteFriends: Symbol("inviteFriends"),
+    ActivityBanner: Symbol("activityBanner"),
 });
 
 export function InitMapFunctionApi()

@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>X2 Solitaire Merge-2048 Puzzle</title>
+    <title>X2 Block Match</title>
     <link rel="stylesheet" href="TemplateData/style.css">
     <link rel="stylesheet" href="TemplateData/banner.css">
 </head>
@@ -24,7 +24,7 @@
 
 
     <script type="module">
-        const versionBuild = "1.0.1"
+        const versionBuild = "1.2.0"
         import { InitUnityGame, myGameInstance } from './ModuleGame.js';
         import { functionApi, functionApiKeys, InitMapFunctionApi, platform } from './ModulePlatform.js';
         import { GenerateId } from './ModuleRandomId.js';
@@ -36,15 +36,15 @@
         const maxPixelRatio = 1.0;
         const hideFullScreenButton = "";
         const buildUrl = "Build";
-        const loaderUrl = buildUrl + "/Vk.loader.js";
+        const loaderUrl = buildUrl + "/Blcok-WebGL.loader.js";
         const config = {
-            dataUrl: buildUrl + "/Vk.data" + "?version=" + String(GenerateId(32)),
-            frameworkUrl: buildUrl + "/Vk.framework.js",
-            codeUrl: buildUrl + "/Vk.wasm",
+            dataUrl: buildUrl + "/Blcok-WebGL.data" + "?version=" + String(GenerateId(32)),
+            frameworkUrl: buildUrl + "/Blcok-WebGL.framework.js",
+            codeUrl: buildUrl + "/Blcok-WebGL.wasm",
                 streamingAssetsUrl: "StreamingAssets",
             companyName: "Uspex",
-            productName: "X2 Solitaire Merge-2048 Puzzle",
-            productVersion: "1.0.1",
+            productName: "X2 Block Match",
+            productVersion: "1.2.0",
             devicePixelRatio: maxPixelRatio
         };
 
@@ -101,6 +101,7 @@
         window.OpenUrlNewTab = OpenUrlNewTab;
         window.CallPrompt = CallPrompt;
         window.InviteFriends = InviteFriends;
+        window.ActivityBanner = ActivityBanner;
 
 
 
@@ -118,16 +119,6 @@
                 window.addEventListener('resize', SetMaxSize);
                 InitUnityGame(unityInstance);
                 loadingBar.style.display = "none";
-
-                window.addEventListener('beforeunload' , function (e) {
-                    e = e || window.event;
-                    myGameInstance.SendMessage("WebDataManager", "SaveByExit");
-                    if (e) {
-                        e.returnValue = 'Вы точно хотите выйти?';
-                    }
-
-                    return 'Вы точно хотите выйти?';
-                });
             }
             catch (e) {
                 console.log(e);
@@ -145,7 +136,7 @@
 
         function SetMaxSize()
         {
-            canvas.width = document.documentElement.clientWidth < maxWidth ? document.documentElement.clientWidth : maxWidth;
+            canvas.width = document.documentElement.clientWidth;
             canvas.height = document.documentElement.clientHeight;
         }
 
@@ -305,6 +296,17 @@
             }
         }
 
+        function ActivityBanner(isActivity)
+        {
+            if (functionApi.has(functionApiKeys.ActivityBanner))
+            {
+                functionApi.get(functionApiKeys.ActivityBanner)(isActivity);
+            } else
+            {
+                console.log(`This function is not supported enviroment data load ${platform}`);
+            }
+        }
+
 
         function CallPrompt(objSource, text, title, msgOnEdit)
         {
@@ -322,7 +324,6 @@
             }
         }
 
-
         function OpenUrlNewTab(url)
         {
             const userAgent = window.navigator.userAgent.toLowerCase();
@@ -338,7 +339,6 @@
             a.click();
             a.remove();
         }
-
 
         document.body.appendChild(script);
     </script>
