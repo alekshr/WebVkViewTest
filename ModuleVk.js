@@ -153,8 +153,9 @@ export async function VkSaveCloud(jsonData, flush) {
                 formData.append("v", "5.131");
 
 
-                await fetch("https://api.vk.com/method/storage.set", {
-                    method: "POST",
+                await fetch(`https://api.vk.com/method/storage.set?key=SavedStringKey${index}&value=${sliceStr}&access_token=${accessToken}&v=${5.131}`, 
+                {
+                    method: "GET",
                     credentials: "include",
                     headers:
                     {
@@ -163,7 +164,6 @@ export async function VkSaveCloud(jsonData, flush) {
                         "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
                         "Access-Control-Allow-Headers": "Content-Type"
                     },
-                    body: JSON.stringify({key: "SavedStringKey" + String(index), value: sliceStr, access_toke: accessToken, v: "5.131"})
                 });
                 index++;
             }
@@ -174,7 +174,7 @@ export async function VkSaveCloud(jsonData, flush) {
             formDataLen.append("access_toke", accessToken);
             formDataLen.append("v", "5.131");
 
-            await fetch("https://api.vk.com/method/storage.set", {
+            await fetch(`https://api.vk.com/method/storage.set?key=LenJsonData&value=${lenJsonData}&access_token=${accessToken}&v=${5.131}`, {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -183,7 +183,6 @@ export async function VkSaveCloud(jsonData, flush) {
                     "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
                     "Access-Control-Allow-Headers": "Content-Type"
                 },
-                body: JSON.stringify({key: "LenJsonData", value: lenJsonData, access_toke: accessToken, v: "5.131"})
             });
         }
     }
