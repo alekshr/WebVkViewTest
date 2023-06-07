@@ -49,11 +49,11 @@ export async function InitVk() {
         console.log("Is init SDK VK");
         await InitLoadData();
 
-        document.addEventListener('visibilitychange', function () {
-            if (document.hidden) {
-                myGameInstance.SendMessage("WebDataManager", "SaveByExit");
-            }
-        });
+        // document.addEventListener('visibilitychange', function () {
+        //     if (document.hidden) {
+        //         myGameInstance.SendMessage("WebDataManager", "SaveByExit");
+        //     }
+        // });
     } else {
         console.log("Is not inited SDK VK");
     }
