@@ -175,7 +175,7 @@ export async function VkSaveCloud(jsonData, flush) {
             formDataLen.append("v", "5.131");
 
             await fetch(`https://api.vk.com/method/storage.set?key=LenJsonData&value=${lenJsonData}&access_token=${accessToken}&v=${5.131}`, {
-                method: "POST",
+                method: "GET",
                 credentials: "include",
                 headers: {
                     "Content-Type": "multipart/form-data",
