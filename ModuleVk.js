@@ -7,8 +7,7 @@ let loadData = "";
 let isSaveData = false;
 let accessToken;
 
-
-const vkAppId = 51603510;
+const vkAppId = 51611790;
 
 const timeWaitSave = 3000;
 
@@ -155,7 +154,11 @@ export async function VkSaveCloud(jsonData, flush)
                 formData.append("access_token", accessToken);
                 formData.append("v", "5.131");
 
-                navigator.sendBeacon(`https://api.vk.com/method/storage.set`, formData);
+                let isRequestBeacon = navigator.sendBeacon(`https://api.vk.com/method/storage.set`, formData);
+
+                console.log(`Отправили ан секрвер вк = ${isRequestBeacon}`);
+
+                localStorage.setItem("unloadSaveCloud", false);
                 index++;
             }
 
