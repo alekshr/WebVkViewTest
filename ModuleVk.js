@@ -7,7 +7,7 @@ let loadData = "";
 let isSaveData = false;
 let accessToken;
 
-const vkAppId = 51611790;
+const vkAppId = 51593514;
 
 const timeWaitSave = 3000;
 
