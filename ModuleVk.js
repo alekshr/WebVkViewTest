@@ -26,6 +26,11 @@ export async function InitVk()
         {
             console.log(`Реклама была не показана из-за ошибки: e.detail.data = ${e.detail.data}`);
         }
+
+        if(e.detail.type === "VKWebAppResizeWindowResult")
+        {
+            console.log(`Поменяли размер окна ${e.detail.data.width}x${e.detail.data.height}`);
+        }
     });
 
     let data = await vkBridge.send("VKWebAppInit", {});
@@ -102,7 +107,7 @@ async function VkActionAds(nameApiMethod,
 
 export async function SetIFrameSize()
 {
-    await vkBridge.send('VKWebAppResizeWindow', {
+    let data = await vkBridge.send('VKWebAppResizeWindow', {
         width: document.documentElement.clientWidth,
         height: document.documentElement.clientHeight
     });
