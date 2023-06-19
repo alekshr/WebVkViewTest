@@ -100,9 +100,9 @@ async function VkActionAds(nameApiMethod,
     }
 }
 
-export function SetIFrameSize()
+export async function SetIFrameSize()
 {
-    vkBridge.send('VKWebAppResizeWindow', {
+    await vkBridge.send('VKWebAppResizeWindow', {
         width: window.innerWidth,
         height: window.innerHeight
     });
