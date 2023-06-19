@@ -103,8 +103,8 @@ async function VkActionAds(nameApiMethod,
 export async function SetIFrameSize()
 {
     await vkBridge.send('VKWebAppResizeWindow', {
-        width: window.innerWidth,
-        height: window.innerHeight
+        width: document.documentElement.clientWidth,
+        height: document.documentElement.clientHeight
     });
 }
 
