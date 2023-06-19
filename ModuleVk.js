@@ -2,12 +2,13 @@ import { myGameInstance } from './ModuleGame.js'
 import { Sleep } from './ModuleSleep.js'
 import { lzw_encode, lzw_decode, decodeHtmlEntity } from './ModuleLZW.js'
 
+const width = 645;
 
 let loadData = "";
 let isSaveData = false;
 let accessToken;
 
-const vkAppId = 51593514;
+const vkAppId = 51611790;
 
 const timeWaitSave = 3000;
 
@@ -34,6 +35,7 @@ export async function InitVk()
     if (data.result)
     {
         console.log("Is init SDK VK");
+        await SetIFrameSize();
         await InitLoadData();
         window.addEventListener('unload', (event) => myGameInstance.SendMessage("WebDataManager", "SaveByExit"));
 
@@ -127,6 +129,7 @@ export function VkLoadCloud()
     return true;
 }
 
+
 export async function VkSaveCloud(jsonData, flush)
 {
     try
@@ -134,16 +137,14 @@ export async function VkSaveCloud(jsonData, flush)
         if (isSaveData)
         {
             let len = 2048;
-            let lenJsonData = String(jsonData.length);
-            let encodeJson = lzw_encode(jsonData);
-            let lenData = encodeJson.length;
+            let lenData = jsonData.length;
             let size = 0;
             let sliceStr;
             let index = 0;
 
             while (lenData > 0)
             {
-                sliceStr = encodeJson.slice(size, size + len);
+                sliceStr = jsonData.slice(size, size + len);
                 size = size + len;
                 lenData = lenData - len;
 
@@ -155,21 +156,8 @@ export async function VkSaveCloud(jsonData, flush)
                 formData.append("v", "5.131");
 
                 let isRequestBeacon = navigator.sendBeacon(`https://api.vk.com/method/storage.set`, formData);
-
-                console.log(`Отправили ан секрвер вк = ${isRequestBeacon}`);
-
-                localStorage.setItem("unloadSaveCloud", false);
                 index++;
             }
-
-            let formData = new FormData();
-            formData.append("key", "LenJsonData");
-            formData.append("value", lenJsonData);
-            formData.append("access_token", accessToken);
-            formData.append("v", "5.131");
-
-            navigator.sendBeacon(`https://api.vk.com/method/storage.set`, formData);
-            localStorage.setItem("unloadSaveCloud", false);
         }
     }
     catch (e)
@@ -192,10 +180,10 @@ export async function VkInviteFriends()
 }
 
 
+
 async function InitLoadData()
 {
     let keysLoad = await vkBridge.send('VKWebAppStorageGetKeys', { count: 10, offset: 0 });
-    let lenValueJsonData = await vkBridge.send('VKWebAppStorageGet', { keys: ['LenJsonData'] });
     let dataKeys = await vkBridge.send('VKWebAppStorageGet', {
         keys: keysLoad.keys
     });
@@ -207,5 +195,5 @@ async function InitLoadData()
             loadData += dataKeys.keys[index].value;
         }
     }
-    loadData = lzw_decode(decodeHtmlEntity(loadData)).substr(0, Number(lenValueJsonData.keys[0].value));
+    loadData = decodeHtmlEntity(loadData);
 }
