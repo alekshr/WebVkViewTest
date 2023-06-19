@@ -40,7 +40,7 @@ export async function InitVk()
     if (data.result)
     {
         console.log("Is init SDK VK");
-        await SetIFrameSize();
+        // await SetIFrameSize();
         await InitLoadData();
         window.addEventListener('unload', (event) => myGameInstance.SendMessage("WebDataManager", "SaveByExit"));
 
