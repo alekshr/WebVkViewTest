@@ -20,13 +20,13 @@ export async function InitVk()
         if (e.detail.type === "VKWebAppShowNativeAdsResult")
         {
             window.focus();
-            console.log(`Реклама показана e.detail.data = ${e.detail.data}`);
+            console.log(`Реклама показана e.detail.data = ${JSON.stringify(e.detail.data)}`);
         }
 
         if (e.detail.type === "VKWebAppShowNativeAdsFailed")
         {
             window.focus();
-            console.log(`Реклама была не показана из-за ошибки: e.detail.data = ${e.detail.data}`);
+            console.log(`Реклама была не показана из-за ошибки: e.detail.data = ${JSON.stringify(e.detail.data)}`);
         }
 
         if(e.detail.type === "VKWebAppResizeWindowResult")
