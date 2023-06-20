@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>X2 Solitaire Merge-2048 Puzzle</title>
+    <title>X2 Block Match</title>
     <link rel="stylesheet" href="TemplateData/style.css">
     <link rel="stylesheet" href="TemplateData/banner.css">
 </head>
@@ -24,7 +24,7 @@
 
 
     <script type="module">
-        const versionBuild = "1.0.1"
+        const versionBuild = "1.2.0"
         import { InitUnityGame, myGameInstance } from './ModuleGame.js';
         import { functionApi, functionApiKeys, InitMapFunctionApi, platform } from './ModulePlatform.js';
         import { GenerateId } from './ModuleRandomId.js';
@@ -43,8 +43,8 @@
             codeUrl: buildUrl + "/Vk.wasm",
                 streamingAssetsUrl: "StreamingAssets",
             companyName: "Uspex",
-            productName: "X2 Solitaire Merge-2048 Puzzle",
-            productVersion: "1.0.1",
+            productName: "X2 Block Match",
+            productVersion: "1.2.0",
             devicePixelRatio: maxPixelRatio
         };
 
@@ -58,7 +58,7 @@
 
         let scriptSdk = CreateSdkScriptElement();
         scriptSdk.src = "https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js";
-        scriptApiSdk.src = "./ModuleVk.js" + "?version=" + "523";
+        scriptApiSdk.src = "./ModuleVk.js";
         document.head.appendChild(scriptSdk);
 
 
@@ -102,6 +102,7 @@
         window.CallPrompt = CallPrompt;
         window.InviteFriends = InviteFriends;
         window.ActivityBanner = ActivityBanner;
+
 
 
         const script = document.createElement("script");
@@ -295,7 +296,6 @@
             }
         }
 
-
         function ActivityBanner(isActivity)
         {
             if (functionApi.has(functionApiKeys.ActivityBanner))
@@ -324,7 +324,6 @@
             }
         }
 
-
         function OpenUrlNewTab(url)
         {
             const userAgent = window.navigator.userAgent.toLowerCase();
@@ -340,7 +339,6 @@
             a.click();
             a.remove();
         }
-
 
         document.body.appendChild(script);
     </script>
