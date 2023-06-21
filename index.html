@@ -56,11 +56,11 @@
 
 
 
-        let scriptSdk = CreateSdkScriptElement();
-        scriptSdk.src = "https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js";
-        scriptApiSdk.src = "./ModuleVk.js";
-        document.head.appendChild(scriptSdk);
 
+        let scriptSdk = CreateSdkScriptElement();
+        scriptSdk.src = "https://yandex.ru/games/sdk/v2";
+        scriptApiSdk.src = "./ModuleYandex.js";
+        document.head.appendChild(scriptSdk);
 
         document.head.appendChild(scriptApiSdk);
 
@@ -136,7 +136,7 @@
 
         function SetMaxSize()
         {
-            canvas.width = document.documentElement.clientWidth;
+            canvas.width = document.documentElement.clientWidth < maxWidth ? document.documentElement.clientWidth : maxWidth;
             canvas.height = document.documentElement.clientHeight;
         }
 
