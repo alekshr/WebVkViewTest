@@ -50,8 +50,12 @@ export async function InitVk() {
 
         document.addEventListener('visibilitychange', function () {
             if (document.hidden) {
+                console.log(`Скрыли приложение`);
+
                 myGameInstance.SendMessage("SoundController", "HideSound", 0);
             } else {
+                console.log(`Открыли приложение`);
+
                 myGameInstance.SendMessage("SoundController", "HideSound", 1);
             }
         });
