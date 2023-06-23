@@ -28,7 +28,8 @@ export async function InitVk() {
         if (e.detail.type === "VKWebAppResizeWindowResult") {
             console.log(`Поменяли размер окна ${e.detail.data.width}x${e.detail.data.height}`);
         }
-
+    });
+    await vkBridge.subscribe(function (e) {
         if (e.detail.type === "VKWebAppViewHide") {
             myGameInstance.SendMessage("SoundController", "HideSound", 0);
         }
@@ -37,6 +38,7 @@ export async function InitVk() {
             myGameInstance.SendMessage("SoundController", "HideSound", 1);
         }
     });
+
 
     let data = await vkBridge.send("VKWebAppInit", {});
     let dataGetAccessToken = await vkBridge.send('VKWebAppGetAuthToken', { app_id: vkAppId, scope: '' });
@@ -53,7 +55,7 @@ export async function InitVk() {
                 console.log(`Скрыли приложение`);
 
                 myGameInstance.SendMessage("SoundController", "HideSound", 0);
-            } else if(document.visibilityState === "visible") {
+            } else if (document.visibilityState === "visible") {
                 console.log(`Открыли приложение`);
 
                 myGameInstance.SendMessage("SoundController", "HideSound", 1);
