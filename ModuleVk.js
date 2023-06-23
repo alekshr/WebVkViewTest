@@ -36,12 +36,12 @@ export async function InitVk()
 
         if(e.detail.type === "VKWebAppViewHide") 
         {
-            myGameInstance.SendMessage("SoundController", "SoundMute", 0);
+            myGameInstance.SendMessage("SoundController", "SoundMute", false);
         }
 
         if(e.detail.type === "VKWebAppViewRestore") 
         {
-            myGameInstance.SendMessage("SoundController", "SoundMute", 1);
+            myGameInstance.SendMessage("SoundController", "SoundMute", true);
         }
     });
 
