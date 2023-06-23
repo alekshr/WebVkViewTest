@@ -49,11 +49,11 @@ export async function InitVk() {
         window.addEventListener('unload', (event) => myGameInstance.SendMessage("WebDataManager", "SaveByExit"));
 
         document.addEventListener('visibilitychange', function () {
-            if (document.hidden) {
+            if (document.visibilityState === "hidden") {
                 console.log(`Скрыли приложение`);
 
                 myGameInstance.SendMessage("SoundController", "HideSound", 0);
-            } else {
+            } else if(document.visibilityState === "visible") {
                 console.log(`Открыли приложение`);
 
                 myGameInstance.SendMessage("SoundController", "HideSound", 1);
