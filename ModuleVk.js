@@ -33,6 +33,16 @@ export async function InitVk()
         {
             console.log(`Поменяли размер окна ${e.detail.data.width}x${e.detail.data.height}`);
         }
+
+        if(e.detail.type === "VKWebAppViewHide") 
+        {
+            myGameInstance.SendMessage("SoundController", "SoundMute", 0);
+        }
+
+        if(e.detail.type === "VKWebAppViewRestore") 
+        {
+            myGameInstance.SendMessage("SoundController", "SoundMute", 1);
+        }
     });
 
     let data = await vkBridge.send("VKWebAppInit", {});
