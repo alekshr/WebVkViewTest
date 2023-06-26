@@ -28,8 +28,9 @@ export async function InitVk() {
         if (e.detail.type === "VKWebAppResizeWindowResult") {
             console.log(`Поменяли размер окна ${e.detail.data.width}x${e.detail.data.height}`);
         }
+        
         if (e.detail.type === "VKWebAppViewHide") {
-            myGameInstance.SendMessage("WebViewAdsController", "Pause");
+            myGameInstance.SendMessage("WebViewAdsController", "PauseGame");
         }
 
         if (e.detail.type === "VKWebAppViewRestore") {
@@ -52,7 +53,7 @@ export async function InitVk() {
             if (document.visibilityState === "hidden") {
                 console.log(`Скрыли приложение`);
 
-                myGameInstance.SendMessage("WebViewAdsController", "Pause");
+                myGameInstance.SendMessage("WebViewAdsController", "PauseGame");
             } else if (document.visibilityState === "visible") {
                 console.log(`Открыли приложение`);
 
