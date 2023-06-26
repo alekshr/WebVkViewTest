@@ -52,11 +52,11 @@ export async function InitVk() {
             if (document.visibilityState === "hidden") {
                 console.log(`Скрыли приложение`);
 
-                myGameInstance.SendMessage("SoundController", "HideSound", 0);
+                myGameInstance.SendMessage("WebViewAdsController", "Pause");
             } else if (document.visibilityState === "visible") {
                 console.log(`Открыли приложение`);
 
-                myGameInstance.SendMessage("SoundController", "HideSound", 1);
+                myGameInstance.SendMessage("WebViewAdsController", "ResumeGame");
             }
         });
 
