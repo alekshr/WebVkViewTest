@@ -28,8 +28,6 @@ export async function InitVk() {
         if (e.detail.type === "VKWebAppResizeWindowResult") {
             console.log(`Поменяли размер окна ${e.detail.data.width}x${e.detail.data.height}`);
         }
-    });
-    await vkBridge.subscribe(function (e) {
         if (e.detail.type === "VKWebAppViewHide") {
             myGameInstance.SendMessage("WebViewAdsController", "Pause");
         }
