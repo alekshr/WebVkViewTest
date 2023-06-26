@@ -31,11 +31,11 @@ export async function InitVk() {
     });
     await vkBridge.subscribe(function (e) {
         if (e.detail.type === "VKWebAppViewHide") {
-            myGameInstance.SendMessage("SoundController", "HideSound", 0);
+            myGameInstance.SendMessage("WebViewAdsController", "Pause");
         }
 
         if (e.detail.type === "VKWebAppViewRestore") {
-            myGameInstance.SendMessage("SoundController", "HideSound", 1);
+            myGameInstance.SendMessage("WebViewAdsController", "ResumeGame");
         }
     });
 
