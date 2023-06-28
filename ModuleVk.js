@@ -17,13 +17,13 @@ export async function InitVk() {
     if (vkBridge.supports("VKWebAppViewRestore")) {
         console.log("Есть поддержка VKWebAppViewRestore")
     }else{
-        console.log("Нет поддержка VKWebAppViewRestore")
+        console.log("Нет поддержки VKWebAppViewRestore")
     }
 
     if (vkBridge.supports("VKWebAppViewHide")) {
-        console.log("Есть поддержка VKWebAppViewRestore")
+        console.log("Есть поддержка VKWebAppViewHide")
     }else{
-        console.log("Нет поддержка VKWebAppViewRestore")
+        console.log("Нет поддержки VKWebAppViewHide")
     }
 
 
