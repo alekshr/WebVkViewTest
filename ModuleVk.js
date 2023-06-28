@@ -14,18 +14,11 @@ const timeWaitSave = 3000;
 
 export async function InitVk() {
     await vkBridge.subscribe((e) => console.log("vkBridge event", e));
-    if (vkBridge.supports("VKWebAppViewRestore")) {
-        console.log("Есть поддержка VKWebAppViewRestore")
-    }else{
-        console.log("Нет поддержки VKWebAppViewRestore")
-    }
-
-    if (vkBridge.supports("VKWebAppViewHide")) {
-        console.log("Есть поддержка VKWebAppViewHide")
-    }else{
-        console.log("Нет поддержки VKWebAppViewHide")
-    }
-
+    
+    IsSupportedApi("VKWebAppViewHide");
+    IsSupportedApi("VKWebAppViewRestore");
+    IsSupportedApi("VKWebAppStorageGet");
+    IsSupportedApi("VKWebAppShowNativeAds");
 
     await vkBridge.subscribe(function (e) {
         if (e.detail.type === "VKWebAppShowNativeAdsResult") {
@@ -82,6 +75,15 @@ export async function InitVk() {
         console.log("Is not inited SDK VK");
     }
 }
+
+function IsSupportedApi(method){
+    if (vkBridge.supports(method)) {
+        console.log(`Есть поддержка ${method}`);
+    }else{
+        console.log(`Нет поддержки ${method}`);
+    }
+}
+
 
 export async function VkPreloadReward() {
     await VkActionAds("VKWebAppCheckNativeAds",
