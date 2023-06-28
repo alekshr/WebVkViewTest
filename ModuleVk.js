@@ -14,6 +14,19 @@ const timeWaitSave = 3000;
 
 export async function InitVk() {
     await vkBridge.subscribe((e) => console.log("vkBridge event", e));
+    if (vkBridge.supports("VKWebAppViewRestore")) {
+        console.log("Есть поддержка VKWebAppViewRestore")
+    }else{
+        console.log("Нет поддержка VKWebAppViewRestore")
+    }
+
+    if (vkBridge.supports("VKWebAppViewHide")) {
+        console.log("Есть поддержка VKWebAppViewRestore")
+    }else{
+        console.log("Нет поддержка VKWebAppViewRestore")
+    }
+
+
     await vkBridge.subscribe(function (e) {
         if (e.detail.type === "VKWebAppShowNativeAdsResult") {
             window.focus();
@@ -30,12 +43,16 @@ export async function InitVk() {
         }
         
         if (e.detail.type === "VKWebAppViewHide") {
+            console.log("Ставим на паузу процесс игры Direct Games")
             myGameInstance.SendMessage("WebViewAdsController", "PauseGame");
         }
 
         if (e.detail.type === "VKWebAppViewRestore") {
+            console.log("Восстаналиваем процесс игры Direct Games")
             myGameInstance.SendMessage("WebViewAdsController", "ResumeGame");
         }
+
+     
     });
 
 
