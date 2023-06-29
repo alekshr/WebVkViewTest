@@ -17,8 +17,6 @@ export async function InitVk() {
     
     IsSupportedApi("VKWebAppViewHide");
     IsSupportedApi("VKWebAppViewRestore");
-    IsSupportedApi("VKWebAppStorageGet");
-    IsSupportedApi("VKWebAppShowNativeAds");
 
     await vkBridge.subscribe(function (e) {
         if (e.detail.type === "VKWebAppShowNativeAdsResult") {
@@ -37,12 +35,12 @@ export async function InitVk() {
         
         if (e.detail.type === "VKWebAppViewHide") {
             console.log("Ставим на паузу процесс игры Direct Games")
-            myGameInstance.SendMessage("WebViewAdsController", "PauseGame");
+            myGameInstance.SendMessage("WebViewAdsController", "OpenAds");
         }
 
         if (e.detail.type === "VKWebAppViewRestore") {
             console.log("Восстаналиваем процесс игры Direct Games")
-            myGameInstance.SendMessage("WebViewAdsController", "ResumeGame");
+            myGameInstance.SendMessage("WebViewAdsController", "CloseAds");
         }
 
      
