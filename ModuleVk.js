@@ -18,6 +18,9 @@ export async function InitVk() {
     IsSupportedApi("VKWebAppViewHide");
     IsSupportedApi("VKWebAppViewRestore");
 
+
+    let data = await vkBridge.send("VKWebAppInit", {});
+
     await vkBridge.subscribe(function (e) {
         if (e.detail.type === "VKWebAppShowNativeAdsResult") {
             window.focus();
@@ -33,12 +36,6 @@ export async function InitVk() {
             console.log(`Поменяли размер окна ${e.detail.data.width}x${e.detail.data.height}`);
         }
 
-
-
-    });
-
-    vkBridge.subscribe(function (e) {
-
         if (e.detail.type === "VKWebAppViewHide") {
             console.log("Ставим на паузу процесс игры Direct Games")
             myGameInstance.SendMessage("WebViewAdsController", "OpenAds");
@@ -49,9 +46,9 @@ export async function InitVk() {
             myGameInstance.SendMessage("WebViewAdsController", "CloseAds");
         }
 
-
     });
-    let data = await vkBridge.send("VKWebAppInit", {});
+
+
     let dataGetAccessToken = await vkBridge.send('VKWebAppGetAuthToken', { app_id: vkAppId, scope: '' });
     accessToken = dataGetAccessToken.access_token;
 
