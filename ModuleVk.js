@@ -41,17 +41,17 @@ export async function InitVk()
             console.log(`Поменяли размер окна ${e.detail.data.width}x${e.detail.data.height}`);
         }
 
-        if (e.detail.type === "VKWebAppViewHide")
-        {
-            console.log("Ставим на паузу процесс игры Direct Games")
-            myGameInstance.SendMessage("WebViewAdsController", "OpenAds");
-        }
+        //if (e.detail.type === "VKWebAppViewHide")
+        //{
+        //    console.log("Ставим на паузу процесс игры Direct Games")
+        //     myGameInstance.SendMessage("WebViewAdsController", "OpenAds");
+        //}
 
-        if (e.detail.type === "VKWebAppViewRestore")
-        {
-            console.log("Восстаналиваем процесс игры Direct Games")
-            myGameInstance.SendMessage("WebViewAdsController", "CloseAds");
-        }
+        //if (e.detail.type === "VKWebAppViewRestore")
+        //{
+        //    console.log("Восстаналиваем процесс игры Direct Games")
+        //   myGameInstance.SendMessage("WebViewAdsController", "CloseAds");
+        //}
 
     });
 
@@ -65,20 +65,20 @@ export async function InitVk()
         // await SetIFrameSize();
         await InitLoadData();
         window.addEventListener('unload', (event) => myGameInstance.SendMessage("WebDataManager", "SaveByExit"));
-        document.addEventListener('visibilitychange', function ()
-        {
-            if (document.visibilityState === "hidden")
-            {
-                console.log(`Скрыли приложение`);
-
-                myGameInstance.SendMessage("WebViewAdsController", "OpenAds");
-            } else if (document.visibilityState === "visible")
-            {
-                console.log(`Открыли приложение`);
-
-                myGameInstance.SendMessage("WebViewAdsController", "CloseAds");
-            }
-        });
+        //document.addEventListener('visibilitychange', function ()
+        //{
+        //    if (document.visibilityState === "hidden")
+        //    {
+        //        console.log(`Скрыли приложение`);
+        //
+        //        myGameInstance.SendMessage("WebViewAdsController", "OpenAds");
+        //    } else if (document.visibilityState === "visible")
+        //    {
+        //         console.log(`Открыли приложение`);
+        //
+        //        myGameInstance.SendMessage("WebViewAdsController", "CloseAds");
+        //    }
+        //});
     } else
     {
         console.log("Is not inited SDK VK");
