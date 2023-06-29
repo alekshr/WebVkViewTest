@@ -33,6 +33,12 @@ export async function InitVk() {
             console.log(`Поменяли размер окна ${e.detail.data.width}x${e.detail.data.height}`);
         }
 
+
+
+    });
+
+    vkBridge.subscribe(function (e) {
+
         if (e.detail.type === "VKWebAppViewHide") {
             console.log("Ставим на паузу процесс игры Direct Games")
             myGameInstance.SendMessage("WebViewAdsController", "OpenAds");
@@ -45,8 +51,6 @@ export async function InitVk() {
 
 
     });
-
-
     let data = await vkBridge.send("VKWebAppInit", {});
     let dataGetAccessToken = await vkBridge.send('VKWebAppGetAuthToken', { app_id: vkAppId, scope: '' });
     accessToken = dataGetAccessToken.access_token;
