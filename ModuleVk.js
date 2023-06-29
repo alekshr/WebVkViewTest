@@ -41,17 +41,17 @@ export async function InitVk()
             console.log(`Поменяли размер окна ${e.detail.data.width}x${e.detail.data.height}`);
         }
 
-        //if (e.detail.type === "VKWebAppViewHide")
-        //{
-        //    console.log("Ставим на паузу процесс игры Direct Games")
-        //     myGameInstance.SendMessage("WebViewAdsController", "OpenAds");
-        //}
+        if (e.detail.type === "VKWebAppViewHide")
+        {
+            console.log("Ставим на паузу процесс игры Direct Games")
+            myGameInstance.SendMessage("WebViewAdsController", "OpenAds");
+        }
 
-        //if (e.detail.type === "VKWebAppViewRestore")
-        //{
-        //    console.log("Восстаналиваем процесс игры Direct Games")
-        //   myGameInstance.SendMessage("WebViewAdsController", "CloseAds");
-        //}
+        if (e.detail.type === "VKWebAppViewRestore")
+        {
+            console.log("Восстаналиваем процесс игры Direct Games")
+            myGameInstance.SendMessage("WebViewAdsController", "CloseAds");
+        }
 
     });
 
