@@ -57,18 +57,21 @@ export async function InitVk() {
         await InitLoadData();
         window.addEventListener('unload', (event) => myGameInstance.SendMessage("WebDataManager", "SaveByExit"));
 
-        document.addEventListener('visibilitychange', function () {
-            if (document.visibilityState === "hidden") {
-                console.log(`Скрыли приложение`);
-
-                myGameInstance.SendMessage("WebViewAdsController", "PauseGame");
-            } else if (document.visibilityState === "visible") {
-                console.log(`Открыли приложение`);
-
-                myGameInstance.SendMessage("WebViewAdsController", "ResumeGame");
-            }
-        });
-
+        if(!vkBridge.isWebView()){
+            document.addEventListener('visibilitychange', function () {
+                if (document.visibilityState === "hidden") {
+                    console.log(`Скрыли приложение`);
+    
+                    myGameInstance.SendMessage("WebViewAdsController", "PauseGame");
+                } else if (document.visibilityState === "visible") {
+                    console.log(`Открыли приложение`);
+    
+                    myGameInstance.SendMessage("WebViewAdsController", "ResumeGame");
+                }
+            });
+    
+        }
+        
     } else {
         console.log("Is not inited SDK VK");
     }
