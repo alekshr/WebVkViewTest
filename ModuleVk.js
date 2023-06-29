@@ -14,7 +14,7 @@ const timeWaitSave = 3000;
 
 export async function InitVk()
 {
-    await vkBridge.subscribe((e) => console.log("vkBridge event", e));
+    await vkBridge.subscribe((e) => console.log("vkBridge event", e.detail.type));
 
     IsSupportedApi("VKWebAppViewHide");
     IsSupportedApi("VKWebAppViewRestore");
