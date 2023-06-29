@@ -36,7 +36,6 @@ export async function InitVk() {
         if (e.detail.type === "VKWebAppViewHide") {
             console.log("Ставим на паузу процесс игры Direct Games")
             myGameInstance.SendMessage("WebViewAdsController", "OpenAds");
-            Sleep(2000);
         }
 
         if (e.detail.type === "VKWebAppViewRestore") {
@@ -61,11 +60,11 @@ export async function InitVk() {
             if (document.visibilityState === "hidden") {
                 console.log(`Скрыли приложение`);
 
-                myGameInstance.SendMessage("WebViewAdsController", "PauseGame");
+                myGameInstance.SendMessage("WebViewAdsController", "OpenAds");
             } else if (document.visibilityState === "visible") {
                 console.log(`Открыли приложение`);
 
-                myGameInstance.SendMessage("WebViewAdsController", "ResumeGame");
+                myGameInstance.SendMessage("WebViewAdsController", "CloseAds");
             }
         });
     } else {
