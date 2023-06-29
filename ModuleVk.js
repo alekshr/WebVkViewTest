@@ -38,12 +38,12 @@ export async function InitVk() {
 
         if (e.detail.type === "VKWebAppViewHide") {
             console.log("Ставим на паузу процесс игры Direct Games")
-            myGameInstance.SendMessage("WebViewAdsController", "OpenAds");
+            myGameInstance.SendMessage("WebViewAdsController", "CloseAds");
         }
 
         if (e.detail.type === "VKWebAppViewRestore") {
             console.log("Восстаналиваем процесс игры Direct Games")
-            myGameInstance.SendMessage("WebViewAdsController", "CloseAds");
+            myGameInstance.SendMessage("WebViewAdsController", "OpenAds");
         }
 
     });
