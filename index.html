@@ -32,7 +32,7 @@
         const canvas = document.querySelector("#unity-canvas");
         const maxWidth = 645;
         const maxHeight = 975;
-        const isDebugEruda = false;
+        const isDebugEruda = true;
         const maxPixelRatio = 1.0;
         const hideFullScreenButton = "";
         const buildUrl = "Build";
@@ -76,8 +76,6 @@
 
         const loadingBar = document.querySelector("#unity-loading-bar");
         const progressBar = document.querySelector("#unity-progress-bar");
-
-        let bowserSdk = CreateSdkScriptElement();
 
         let scriptApiSdk = CreateSdkScriptElement();
 
@@ -128,29 +126,6 @@
         window.InviteFriends = InviteFriends;
         window.ActivityBanner = ActivityBanner;
         window.CheckBrowser = ActivityBanner;
-
-        let scriptEruda = CreateSdkScriptElement();
-            scriptEruda.src = "https://cdn.jsdelivr.net/npm/eruda";
-            document.head.appendChild(scriptEruda);
-
-            scriptEruda.onload = function ()
-            {
-                let erudaElementConsole = document.createElement('div');
-                document.body.appendChild(erudaElementConsole);
-
-
-                eruda.init({
-                    container: erudaElementConsole,
-                    tool: ['console', 'elements'],
-                    useShadowDom: true,
-                    autoScale: true,
-                    defaults: {
-                        displaySize: 50,
-                        transparency: 0.9,
-                        theme: 'Monokai Pro'
-                    }
-                });
-            }
 
         const script = document.createElement("script");
         script.src = loaderUrl;
