@@ -82,6 +82,9 @@
         let scriptApiSdk = CreateSdkScriptElement();
 
 
+        let browserSdk = CreateSdkScriptElement();
+        browserSdk.src = "https://unpkg.com/bowser/es5.js"
+        document.head.appendChild(browserSdk);
 
         let scriptSdk = CreateSdkScriptElement();
         scriptSdk.src = "https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js";
@@ -90,6 +93,10 @@
 
 
         document.head.appendChild(scriptApiSdk);
+
+
+        console.log(`browser name = ${bowser.getParser(window.navigator.userAgent).parsedResult.browser.name}`);
+
 
         const canFullscreen = (function ()
         {
