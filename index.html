@@ -41,21 +41,19 @@
             dataUrl: buildUrl + "/Vk.data" + "?version=" + String(GenerateId(32)),
             frameworkUrl: buildUrl + "/Vk.framework.js",
             codeUrl: buildUrl + "/Vk.wasm",
-                streamingAssetsUrl: "StreamingAssets",
+            streamingAssetsUrl: "StreamingAssets",
             companyName: "Uspex",
             productName: "X2 Block Match",
             productVersion: "1.2.0",
             devicePixelRatio: maxPixelRatio
         };
 
-        if (isDebugEruda)
-        {
+        if (isDebugEruda) {
             let scriptEruda = CreateSdkScriptElement();
             scriptEruda.src = "https://cdn.jsdelivr.net/npm/eruda";
             document.head.appendChild(scriptEruda);
 
-            scriptEruda.onload = function ()
-            {
+            scriptEruda.onload = function () {
                 let erudaElementConsole = document.createElement('div');
                 document.body.appendChild(erudaElementConsole);
 
@@ -80,9 +78,6 @@
         const progressBar = document.querySelector("#unity-progress-bar");
 
         let bowserSdk = CreateSdkScriptElement();
-        bowserSdk.src = "https://unpkg.com/bowser/es5.js";
-        document.head.appendChild(bowserSdk);
-        console.log(`The current browser name is "${bowser.getParser(window.navigator.userAgent)}"`);
 
         let scriptApiSdk = CreateSdkScriptElement();
 
@@ -97,18 +92,15 @@
         document.head.appendChild(scriptApiSdk);
 
 
-        const canFullscreen = (function ()
-        {
+        const canFullscreen = (function () {
             for (const key of [
                 'exitFullscreen',
                 'webkitExitFullscreen',
                 'webkitCancelFullScreen',
                 'mozCancelFullScreen',
                 'msExitFullscreen',
-            ])
-            {
-                if (key in document)
-                {
+            ]) {
+                if (key in document) {
                     return true;
                 }
             }
@@ -135,20 +127,39 @@
         window.CallPrompt = CallPrompt;
         window.InviteFriends = InviteFriends;
         window.ActivityBanner = ActivityBanner;
+        window.CheckBrowser = ActivityBanner;
+
+        let scriptEruda = CreateSdkScriptElement();
+            scriptEruda.src = "https://cdn.jsdelivr.net/npm/eruda";
+            document.head.appendChild(scriptEruda);
+
+            scriptEruda.onload = function ()
+            {
+                let erudaElementConsole = document.createElement('div');
+                document.body.appendChild(erudaElementConsole);
 
 
+                eruda.init({
+                    container: erudaElementConsole,
+                    tool: ['console', 'elements'],
+                    useShadowDom: true,
+                    autoScale: true,
+                    defaults: {
+                        displaySize: 50,
+                        transparency: 0.9,
+                        theme: 'Monokai Pro'
+                    }
+                });
+            }
 
         const script = document.createElement("script");
         script.src = loaderUrl;
         script.async = false;
-        script.onload = async function ()
-        {
-            try
-            {
+        script.onload = async function () {
+            try {
                 InitMapFunctionApi();
                 await functionApi.get(functionApiKeys.InitSDK)();
-                let unityInstance = await createUnityInstance(canvas, config, function (progress)
-                {
+                let unityInstance = await createUnityInstance(canvas, config, function (progress) {
                     progressBar.style.width = 100 * progress + "%";
                 });
                 SetMaxSize();
@@ -156,222 +167,198 @@
                 InitUnityGame(unityInstance);
                 loadingBar.style.display = "none";
             }
-            catch (e)
-            {
+            catch (e) {
                 console.log(e);
                 alert(e);
             }
         };
 
-        function CreateSdkScriptElement()
-        {
+        function CreateSdkScriptElement() {
             let scriptSdk = document.createElement("script");
             scriptSdk.type = "module";
             scriptSdk.async = false;
             return scriptSdk;
         }
 
-        function SetMaxSize()
-        {
+        function SetMaxSize() {
             canvas.width = document.documentElement.clientWidth;
             canvas.height = document.documentElement.clientHeight;
         }
 
-        function ShowReward()
-        {
-            if (functionApi.has(functionApiKeys.ShowReward))
-            {
+        function ShowReward() {
+            if (functionApi.has(functionApiKeys.ShowReward)) {
                 functionApi.get(functionApiKeys.ShowReward)();
-            } else
-            {
+            } else {
                 console.log(`This function is not supported show reward ${platform}`);
             }
         }
 
-        function ShowInterstitial()
-        {
-            if (functionApi.has(functionApiKeys.ShowInterstitial))
-            {
+        function ShowInterstitial() {
+            if (functionApi.has(functionApiKeys.ShowInterstitial)) {
                 functionApi.get(functionApiKeys.ShowInterstitial)();
-            } else
-            {
+            } else {
                 console.log(`This function is not supported show interstitial ${platform}`);
             }
         }
 
-        function PreloadReward()
-        {
-            if (functionApi.has(functionApiKeys.PreloadReward))
-            {
+        function PreloadReward() {
+            if (functionApi.has(functionApiKeys.PreloadReward)) {
                 functionApi.get(functionApiKeys.PreloadReward)();
-            } else
-            {
+            } else {
                 console.log(`This function is not supported preload reward ${platform}`);
             }
         }
 
-        function PreloadInterstitial()
-        {
-            if (functionApi.has(functionApiKeys.PreloadInterstitial))
-            {
+        function PreloadInterstitial() {
+            if (functionApi.has(functionApiKeys.PreloadInterstitial)) {
                 functionApi.get(functionApiKeys.PreloadInterstitial)();
-            } else
-            {
+            } else {
                 console.log(`This function is not supported preload interstitial ${platform}`);
             }
         }
 
-        function BuyInApp(id)
-        {
-            if (functionApi.has(functionApiKeys.BuyInApp))
-            {
+        function BuyInApp(id) {
+            if (functionApi.has(functionApiKeys.BuyInApp)) {
                 functionApi.get(functionApiKeys.BuyInApp)(id);
-            } else
-            {
+            } else {
                 console.log(`This function is not supported buy inApp ${platform}`);
             }
         }
 
-        function GetInApp()
-        {
-            if (functionApi.has(functionApiKeys.GetInApp))
-            {
+        function GetInApp() {
+            if (functionApi.has(functionApiKeys.GetInApp)) {
                 return functionApi.get(functionApiKeys.GetInApp)();
-            } else
-            {
+            } else {
                 console.log(`This function is not supported get inApp ${platform}`);
                 return false;
             }
         }
 
-        function DeleteInApp(id)
-        {
-            if (functionApi.has(functionApiKeys.DeleteInApp))
-            {
+        function DeleteInApp(id) {
+            if (functionApi.has(functionApiKeys.DeleteInApp)) {
                 functionApi.get(functionApiKeys.DeleteInApp)(id);
-            } else
-            {
+            } else {
                 console.log(`This function is not supported delete inApp ${platform}`);
             }
         }
 
-        function DeleteAllInApp()
-        {
-            if (functionApi.has(functionApiKeys.DeleteAllInApp))
-            {
+        function DeleteAllInApp() {
+            if (functionApi.has(functionApiKeys.DeleteAllInApp)) {
                 functionApi.get(functionApiKeys.DeleteAllInApp)();
-            } else
-            {
+            } else {
                 console.log(`This function is not supported delete all inApp ${platform}`);
             }
         }
 
-        function AuthCheck()
-        {
-            if (functionApi.has(functionApiKeys.AuthCheck))
-            {
+        function AuthCheck() {
+            if (functionApi.has(functionApiKeys.AuthCheck)) {
                 functionApi.get(functionApiKeys.AuthCheck)();
-            } else
-            {
+            } else {
                 console.log(`This function is not supported auth check ${platform}`);
             }
         }
 
-        function AuthDialog()
-        {
-            if (functionApi.has(functionApiKeys.OpenAuthDialog))
-            {
+        function AuthDialog() {
+            if (functionApi.has(functionApiKeys.OpenAuthDialog)) {
                 functionApi.get(functionApiKeys.OpenAuthDialog)();
-            } else
-            {
+            } else {
                 console.log(`This function is not supported open auth dialog ${platform}`);
             }
         }
 
-        function CloudSaveGame(jsonData, flush)
-        {
-            if (functionApi.has(functionApiKeys.SaveGameCloud))
-            {
+        function CloudSaveGame(jsonData, flush) {
+            if (functionApi.has(functionApiKeys.SaveGameCloud)) {
                 functionApi.get(functionApiKeys.SaveGameCloud)(jsonData, flush);
-            } else
-            {
+            } else {
                 console.log(`This function is not supported save game cloud ${platform}`);
             }
         }
 
-        function CloudLoadGame()
-        {
-            if (functionApi.has(functionApiKeys.LoadGameCloud))
-            {
+        function CloudLoadGame() {
+            if (functionApi.has(functionApiKeys.LoadGameCloud)) {
                 return functionApi.get(functionApiKeys.LoadGameCloud)();
-            } else
-            {
+            } else {
                 console.log(`This function is not supported load game cloud ${platform}`);
                 return false;
             }
         }
 
-        function GetEnvironmentData()
-        {
-            if (functionApi.has(functionApiKeys.EnviromentData))
-            {
+        function GetEnvironmentData() {
+            if (functionApi.has(functionApiKeys.EnviromentData)) {
                 functionApi.get(functionApiKeys.EnviromentData)();
-            } else
-            {
+            } else {
                 console.log(`This function is not supported enviroment data load ${platform}`);
             }
         }
 
-        function InviteFriends()
-        {
-            if (functionApi.has(functionApiKeys.InviteFriends))
-            {
+        function InviteFriends() {
+            if (functionApi.has(functionApiKeys.InviteFriends)) {
                 functionApi.get(functionApiKeys.InviteFriends)();
-            } else
-            {
+            } else {
                 console.log(`This function is not supported enviroment data load ${platform}`);
             }
         }
 
-        function ActivityBanner(isActivity)
-        {
-            if (functionApi.has(functionApiKeys.ActivityBanner))
-            {
+        function ActivityBanner(isActivity) {
+            if (functionApi.has(functionApiKeys.ActivityBanner)) {
                 functionApi.get(functionApiKeys.ActivityBanner)(isActivity);
-            } else
-            {
+            } else {
                 console.log(`This function is not supported enviroment data load ${platform}`);
             }
         }
 
 
-        function CallPrompt(objSource, text, title, msgOnEdit)
-        {
+        function CheckBrowser() {
+            const test = regexp => regexp.test(navigator.userAgent);
+            let browserType = "";
+            if (test(/opr\//i) || !!window.opr) {
+                browserType = 'Opera';
+            } else if (test(/edg/i)) {
+                browserType = 'Microsoft Edge';
+            } else if (test(/chrome|chromium|crios/i)) {
+                browserType = 'Google Chrome';
+            } else if (test(/firefox|fxios/i)) {
+                browserType = 'Mozilla Firefox';
+            } else if (test(/safari/i)) {
+                browserType = 'Apple Safari';
+            } else if (test(/trident/i)) {
+                browserType = 'Microsoft Internet Explorer';
+            } else if (test(/ucbrowser/i)) {
+                browserType = 'UC Browser';
+            } else if (test(/samsungbrowser/i)) {
+                browserType = 'Samsung Browser';
+            } else {
+                browserType = 'Unknown browser';
+            }
+
+            let bufferSize = lengthBytesUTF8(browserType) + 1;
+            var buffer = _malloc(bufferSize);
+            stringToUTF8(browserType, buffer, bufferSize);
+            return buffer;
+        }
+
+
+        function CallPrompt(objSource, text, title, msgOnEdit) {
             let result = prompt(title, text);
 
-            if (result)
-            {
+            if (result) {
                 myGameInstance.SendMessage(objSource, msgOnEdit, result);
                 window.focus();
             }
-            else
-            {
+            else {
                 window.focus();
                 return;
             }
         }
 
-        function OpenUrlNewTab(url)
-        {
+        function OpenUrlNewTab(url) {
             const userAgent = window.navigator.userAgent.toLowerCase();
             const safari = /safari/.test(userAgent);
             const ios = /iphone|ipod|ipad/.test(userAgent);
             let a = document.createElement('a');
-            if (safari || (ios && safari))
-            {
+            if (safari || (ios && safari)) {
                 a.setAttribute('data-target', '_blank');
-            } else
-            {
+            } else {
                 a.target = '_blank';
             }
             a.href = url;
