@@ -28,7 +28,7 @@
         import { functionApi, functionApiKeys, InitMapFunctionApi, platform } from './ModulePlatform.js';
         import { GenerateId } from './ModuleRandomId.js';
         const versionBuild = "1.0.1";
-        const numberBuild = "2";
+        const numberBuild = "3";
         const canvas = document.querySelector("#unity-canvas");
         const maxWidth = 645;
         const maxHeight = 975;
@@ -36,11 +36,11 @@
         const maxPixelRatio = 1.0;
         const hideFullScreenButton = "";
         const buildUrl = "Build";
-        const loaderUrl = buildUrl + "/Vk.loader.js";
+        const loaderUrl = buildUrl + "/Vk.loader.js" + `?version=${versionBuild}.${numberBuild}`;
         const config = {
             dataUrl: buildUrl + "/Vk.data" + "?version=" + String(GenerateId(32)),
-            frameworkUrl: buildUrl + "/Vk.framework.js",
-            codeUrl: buildUrl + "/Vk.wasm",
+            frameworkUrl: buildUrl + "/Vk.framework.js" + `?version=${versionBuild}.${numberBuild}`,
+            codeUrl: buildUrl + "/Vk.wasm" + `?version=${versionBuild}.${numberBuild}`,
             streamingAssetsUrl: "StreamingAssets",
             companyName: "Uspex",
             productName: "X2 Solitaire Merge-2048 Puzzle",
