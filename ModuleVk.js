@@ -37,7 +37,7 @@ export async function InitVk() {
         }
     });
 
-    bridge.subscribe(function (e) {
+    vkBridge.subscribe(function (e) {
 
         if (e.detail.type === "VKWebAppViewHide") {
             if (myGameInstance) {
