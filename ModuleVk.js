@@ -47,6 +47,7 @@ export async function InitVk() {
         if (e.detail.type === "VKWebAppViewRestore") {
             if (myGameInstance) {
                 myGameInstance.SendMessage("WebAudioAutoPauseController", "Focus");
+                window.focus();
             }
         }
     });
@@ -68,6 +69,7 @@ export async function InitVk() {
                 myGameInstance.SendMessage("WebAudioAutoPauseController", "UnFocus");
             } else {
                 myGameInstance.SendMessage("WebAudioAutoPauseController", "Focus");
+                window.focus();
             }
         });
 
