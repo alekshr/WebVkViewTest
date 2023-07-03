@@ -37,16 +37,6 @@ export async function InitVk() {
         }
     });
 
-    vkBridge.subscribe(function (e) {
-
-        if (e.detail.type === "VKWebAppViewRestore") {
-            window.focus();
-        }
-    });
-
-
-
-
     let dataGetAccessToken = await vkBridge.send('VKWebAppGetAuthToken', { app_id: vkAppId, scope: '' });
     accessToken = dataGetAccessToken.access_token; 
 
@@ -55,14 +45,6 @@ export async function InitVk() {
         // await SetIFrameSize();
         await InitLoadData();
         window.addEventListener('unload', (event) => myGameInstance.SendMessage("WebDataManager", "SaveByExit"));
-        document.addEventListener('visibilitychange', function () {
-            if (document.visibilityState === "visible") {
-                window.focus();
-            } 
-        });
-
-
-
     } else {
         console.log("Is not inited SDK VK");
     }
