@@ -28,10 +28,10 @@
         import { functionApi, functionApiKeys, InitMapFunctionApi, platform } from './ModulePlatform.js';
         import { GenerateId } from './ModuleRandomId.js';
         const versionBuild = "1.0.1";
-        const numberBuild = "1";
+        const numberBuild = "2";
         const canvas = document.querySelector("#unity-canvas");
-        const maxWidth = 630;
-        const maxHeight = 960;
+        const maxWidth = 645;
+        const maxHeight = 975;
         const isDebugEruda = false;
         const maxPixelRatio = 1.0;
         const hideFullScreenButton = "";
@@ -320,10 +320,7 @@
                 browserType = 'Unknown browser';
             }
 
-            let bufferSize = lengthBytesUTF8(browserType) + 1;
-            var buffer = _malloc(bufferSize);
-            stringToUTF8(browserType, buffer, bufferSize);
-            return buffer;
+            return browserType;
         }
 
         function OpenUrlNewTab(url) {
