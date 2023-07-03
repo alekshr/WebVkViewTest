@@ -39,14 +39,8 @@ export async function InitVk() {
 
     vkBridge.subscribe(function (e) {
 
-        if (e.detail.type === "VKWebAppViewHide") {
-            if (myGameInstance) {
-                myGameInstance.SendMessage("WebAudioAutoPauseController", "UnFocus");
-            }
-        }
         if (e.detail.type === "VKWebAppViewRestore") {
             if (myGameInstance) {
-                myGameInstance.SendMessage("WebAudioAutoPauseController", "Focus");
                 window.focus();
             }
         }
@@ -64,13 +58,9 @@ export async function InitVk() {
         await InitLoadData();
         window.addEventListener('unload', (event) => myGameInstance.SendMessage("WebDataManager", "SaveByExit"));
         document.addEventListener('visibilitychange', function () {
-            // Проверяем, скрыта ли страница
-            if (document.hidden) {
-                myGameInstance.SendMessage("WebAudioAutoPauseController", "UnFocus");
-            } else {
-                myGameInstance.SendMessage("WebAudioAutoPauseController", "Focus");
+            if (document.visibilityState === "visible") {
                 window.focus();
-            }
+            } 
         });
 
 
