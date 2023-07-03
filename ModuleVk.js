@@ -40,9 +40,7 @@ export async function InitVk() {
     vkBridge.subscribe(function (e) {
 
         if (e.detail.type === "VKWebAppViewRestore") {
-            if (myGameInstance) {
-                window.focus();
-            }
+            window.focus();
         }
     });
 
@@ -50,7 +48,7 @@ export async function InitVk() {
 
 
     let dataGetAccessToken = await vkBridge.send('VKWebAppGetAuthToken', { app_id: vkAppId, scope: '' });
-    accessToken = dataGetAccessToken.access_token;
+    accessToken = dataGetAccessToken.access_token; 
 
     if (data.result) {
         console.log("Is init SDK VK");
