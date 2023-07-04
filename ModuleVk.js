@@ -51,7 +51,7 @@ export async function InitVk() {
         bodyGame.onclick = () => console.log(`Кликнули на тело сайта`);
         document.addEventListener("visibilitychange", function(){
             if(document.visibilityState === "visible"){
-                bodyGame.dispatchEvent(clickEvent);
+                setTimeout(() => bodyGame.dispatchEvent(clickEvent), 1000);
             }
           });
     } else {
