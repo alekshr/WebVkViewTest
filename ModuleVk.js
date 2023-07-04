@@ -59,6 +59,7 @@ export async function InitVk() {
 }
 
 function simulateTouchOnElement(element, screenX, screenY) {
+    console.log("Вызвали touch");
     var touchEvent = new TouchEvent('touchstart', {
       bubbles: true,
       cancelable: true,
