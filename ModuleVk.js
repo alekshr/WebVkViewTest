@@ -11,20 +11,9 @@ let accessToken;
 const vkAppId = 51593514;
 
 const timeWaitSave = 3000;
-let canvasGame;
-let touchEvent;
+
 export async function InitVk() {
     await vkBridge.subscribe((e) => console.log("vkBridge event", e.detail.type));
-    canvasGame = document.querySelector("canvas");
-    touchEvent = new TouchEvent('touchstart', {
-        bubbles: true,
-        cancelable: true,
-        view: window,
-        clientX: 100,
-        clientY: 200,
-        screenX: 100,
-        screenY: 200
-      });
 
     IsSupportedApi("VKWebAppViewHide");
     IsSupportedApi("VKWebAppViewRestore");
@@ -57,21 +46,12 @@ export async function InitVk() {
         await InitLoadData();
         window.addEventListener('unload', (event) => myGameInstance.SendMessage("WebDataManager", "SaveByExit"));
         document.addEventListener("visibilitychange", function () {
-            if (document.visibilityState === "visible") {
-                setTimeout(() => simulateTouchOnElement(), 1000);
+            if (document.visibilityState === "hidden") {
+                window.blur();
             }
         });
     } else {
         console.log("Is not inited SDK VK");
-    }
-}
-
-function simulateTouchOnElement() {
-    if(canvasGame && touchEvent)
-    {
-        console.log("апрув тач");
-        canvasGame.dispatchEvent(touchEvent);
-
     }
 }
 
