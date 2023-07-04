@@ -16,7 +16,7 @@ let canvasGame;
 
 export async function InitVk() {
     await vkBridge.subscribe((e) => console.log("vkBridge event", e.detail.type));
-    canvasGame = document.querySelector("canvas");
+    canvasGame = document.querySelector("body");
     IsSupportedApi("VKWebAppViewHide");
     IsSupportedApi("VKWebAppViewRestore");
 
