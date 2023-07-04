@@ -12,17 +12,19 @@ const vkAppId = 51593514;
 
 const timeWaitSave = 3000;
 let canvasGame;
-let hammer;
-
+let touchEvent;
 export async function InitVk() {
     await vkBridge.subscribe((e) => console.log("vkBridge event", e.detail.type));
     canvasGame = document.querySelector("canvas");
-    hammer = new Hammer(canvasGame);
-    hammer.get('tap').set({ enable: true });
-    hammer.on('tap', function (event) {
-        // Handle the tap event
-        console.log('Tap event triggered!');
-    });
+    touchEvent = new TouchEvent('touchstart', {
+        bubbles: true,
+        cancelable: true,
+        view: window,
+        clientX: 100,
+        clientY: 200,
+        screenX: 100,
+        screenY: 200
+      });
 
     IsSupportedApi("VKWebAppViewHide");
     IsSupportedApi("VKWebAppViewRestore");
@@ -65,11 +67,11 @@ export async function InitVk() {
 }
 
 function simulateTouchOnElement() {
-    if(hammer){
-        let tapEvent = new Hammer.Tap();
-        tapEvent.target = canvasGame;
-        tapEvent.srcEvent = { type: 'tap' };
-        hammer.emit('tap', tapEvent);
+    if(canvasGame && touchEvent)
+    {
+        console.log("апрув тач");
+        canvasGame.dispatchEvent(touchEvent);
+
     }
 }
 
