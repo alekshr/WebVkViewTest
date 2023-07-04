@@ -48,7 +48,6 @@ export async function InitVk() {
         document.querySelector("body").onclick = () => console.log(`Кликнули на тело сайта`);
         document.addEventListener("visibilitychange", function(){
             if(document.visibilityState === "visible"){
-                Sleep(1000);
                 document.querySelector("body").dispatchEvent(new Event("click"));
             }
           });
