@@ -11,10 +11,13 @@ let accessToken;
 const vkAppId = 51593514;
 
 const timeWaitSave = 3000;
+let bodyGame;
+let clickEvent;
 
 export async function InitVk() {
     await vkBridge.subscribe((e) => console.log("vkBridge event", e.detail.type));
-
+    bodyGame = document.querySelector("body");
+    clickEvent = new Event("click");
     IsSupportedApi("VKWebAppViewHide");
     IsSupportedApi("VKWebAppViewRestore");
 
@@ -45,10 +48,10 @@ export async function InitVk() {
         // await SetIFrameSize();
         await InitLoadData();
         window.addEventListener('unload', (event) => myGameInstance.SendMessage("WebDataManager", "SaveByExit"));
-        document.querySelector("body").onclick = () => console.log(`Кликнули на тело сайта`);
+        bodyGame.onclick = () => console.log(`Кликнули на тело сайта`);
         document.addEventListener("visibilitychange", function(){
             if(document.visibilityState === "visible"){
-                document.querySelector("body").dispatchEvent(new Event("click"));
+                bodyGame.dispatchEvent(clickEvent);
             }
           });
     } else {
