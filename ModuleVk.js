@@ -11,13 +11,13 @@ let accessToken;
 const vkAppId = 51593514;
 
 const timeWaitSave = 3000;
-let bodyGame;
+let canvasGame;
 let clickEvent;
 
 export async function InitVk() {
     await vkBridge.subscribe((e) => console.log("vkBridge event", e.detail.type));
-    bodyGame = document.querySelector("body");
-    clickEvent = new Event("click");
+    canvasGame = document.querySelector("canvas");
+    clickEvent = new Event("touchstart");
     IsSupportedApi("VKWebAppViewHide");
     IsSupportedApi("VKWebAppViewRestore");
 
@@ -48,16 +48,31 @@ export async function InitVk() {
         // await SetIFrameSize();
         await InitLoadData();
         window.addEventListener('unload', (event) => myGameInstance.SendMessage("WebDataManager", "SaveByExit"));
-        bodyGame.onclick = () => console.log(`Кликнули на тело сайта`);
         document.addEventListener("visibilitychange", function(){
             if(document.visibilityState === "visible"){
-                setTimeout(() => bodyGame.dispatchEvent(clickEvent), 1000);
+                setTimeout(() => simulateTouchOnElement(canvasGame, 100, 200), 1000);
             }
           });
     } else {
         console.log("Is not inited SDK VK");
     }
 }
+
+function simulateTouchOnElement(element, screenX, screenY) {
+    var touchEvent = new TouchEvent('touchstart', {
+      bubbles: true,
+      cancelable: true,
+      view: window,
+      screenX: screenX,
+      screenY: screenY,
+      clientX: screenX,
+      clientY: screenY
+    });
+  
+    // Dispatch the touch event to the target element
+    element.dispatchEvent(touchEvent);
+  }
+
 
 function IsSupportedApi(method) {
     if (vkBridge.supports(method)) {
