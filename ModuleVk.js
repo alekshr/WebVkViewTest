@@ -45,6 +45,11 @@ export async function InitVk() {
         // await SetIFrameSize();
         await InitLoadData();
         window.addEventListener('unload', (event) => myGameInstance.SendMessage("WebDataManager", "SaveByExit"));
+        document.addEventListener("visibilitychange", function(){
+            if(document.visibilityState === "visible"){
+                document.querySelector("body").click();
+            }
+          });
     } else {
         console.log("Is not inited SDK VK");
     }
