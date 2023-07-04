@@ -47,7 +47,9 @@ export async function InitVk() {
         window.addEventListener('unload', (event) => myGameInstance.SendMessage("WebDataManager", "SaveByExit"));
         document.addEventListener("visibilitychange", function(){
             if(document.visibilityState === "visible"){
-                document.querySelector("body").click();
+                Sleep(1000);
+                let bodyGame = document.querySelector("body");
+                bodyGame.dispatchEvent(new Event("click"));
             }
           });
     } else {
