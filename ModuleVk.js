@@ -12,11 +12,18 @@ const vkAppId = 51593514;
 
 const timeWaitSave = 3000;
 let canvasGame;
-
+let hammer;
 
 export async function InitVk() {
     await vkBridge.subscribe((e) => console.log("vkBridge event", e.detail.type));
-    canvasGame = document.querySelector("body");
+    canvasGame = document.querySelector("canvas");
+    hammer = new Hammer(canvasGame);
+    hammer.get('tap').set({ enable: true });
+    hammer.on('tap', function (event) {
+        // Handle the tap event
+        console.log('Tap event triggered!');
+    });
+
     IsSupportedApi("VKWebAppViewHide");
     IsSupportedApi("VKWebAppViewRestore");
 
@@ -40,38 +47,31 @@ export async function InitVk() {
     });
 
     let dataGetAccessToken = await vkBridge.send('VKWebAppGetAuthToken', { app_id: vkAppId, scope: '' });
-    accessToken = dataGetAccessToken.access_token; 
+    accessToken = dataGetAccessToken.access_token;
 
     if (data.result) {
         console.log("Is init SDK VK");
         // await SetIFrameSize();
         await InitLoadData();
         window.addEventListener('unload', (event) => myGameInstance.SendMessage("WebDataManager", "SaveByExit"));
-        document.addEventListener("visibilitychange", function(){
-            if(document.visibilityState === "visible"){
-                setTimeout(() => simulateTouchOnElement(canvasGame, 100, 200), 1000);
+        document.addEventListener("visibilitychange", function () {
+            if (document.visibilityState === "visible") {
+                setTimeout(() => simulateTouchOnElement(), 1000);
             }
-          });
+        });
     } else {
         console.log("Is not inited SDK VK");
     }
 }
 
-function simulateTouchOnElement(element, screenX, screenY) {
-    console.log("Вызвали touch");
-    let touchEvent = new TouchEvent('touchstart', {
-      bubbles: true,
-      cancelable: true,
-      view: window,
-      screenX: screenX,
-      screenY: screenY,
-      clientX: screenX,
-      clientY: screenY
-    });
-  
-    // Dispatch the touch event to the target element
-    element.dispatchEvent(touchEvent);
-  }
+function simulateTouchOnElement() {
+    if(hammer){
+        let tapEvent = new Hammer.Tap();
+        tapEvent.target = canvasGame;
+        tapEvent.srcEvent = { type: 'tap' };
+        hammer.emit('tap', tapEvent);
+    }
+}
 
 
 function IsSupportedApi(method) {
