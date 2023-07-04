@@ -12,12 +12,11 @@ const vkAppId = 51593514;
 
 const timeWaitSave = 3000;
 let canvasGame;
-let clickEvent;
+
 
 export async function InitVk() {
     await vkBridge.subscribe((e) => console.log("vkBridge event", e.detail.type));
     canvasGame = document.querySelector("canvas");
-    clickEvent = new Event("touchstart");
     IsSupportedApi("VKWebAppViewHide");
     IsSupportedApi("VKWebAppViewRestore");
 
@@ -60,7 +59,7 @@ export async function InitVk() {
 
 function simulateTouchOnElement(element, screenX, screenY) {
     console.log("Вызвали touch");
-    var touchEvent = new TouchEvent('touchstart', {
+    let touchEvent = new TouchEvent('touchstart', {
       bubbles: true,
       cancelable: true,
       view: window,
