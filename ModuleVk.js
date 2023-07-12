@@ -214,6 +214,7 @@ async function InitLoadData()
 {
     try
     {
+        throw new Exception("Test");
         console.log("vkBridge Init Data");
 
         let keysLoad = await vkBridge.send('VKWebAppStorageGetKeys', { count: 10, offset: 0 });
