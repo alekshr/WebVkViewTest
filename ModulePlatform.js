@@ -1,4 +1,4 @@
-import { InitVk, VkPreloadReward, VkPreloadInterstitial, VkShowReward, VkShowInterstitial, VkLoadCloud, VkSaveCloud, VkInviteFriends  } from './ModuleVk.js';
+import { InitVk, VkPreloadReward, VkPreloadInterstitial, VkShowReward, VkShowInterstitial, VkLoadCloud, VkSaveCloud, VkInviteFriends } from './ModuleVk.js';
 
 
 
