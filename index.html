@@ -39,7 +39,7 @@
         const buildUrl = "Build";
         const loaderUrl = buildUrl + "/Vk.loader.js";
         const config = {
-            dataUrl: buildUrl + "/Vk.data" + "?version=" + String(GenerateId(32)),
+            dataUrl: buildUrl + "/Vk.data" + `?version=${versionBuild}` + `${numberVersion}`,
             frameworkUrl: buildUrl + "/Vk.framework.js" + `?version=${versionBuild}` + `${numberVersion}`,
             codeUrl: buildUrl + "/Vk.wasm" + `?version=${versionBuild}` + `${numberVersion}`,
                 streamingAssetsUrl: "StreamingAssets",
