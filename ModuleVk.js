@@ -15,39 +15,7 @@ const timeWaitSave = 3000;
 export async function InitVk()
 {
     
-    console.log("vkBridge Init");
-
     let data = await vkBridge.send("VKWebAppInit", {});
-
-    console.log("vkBridge event sub all event");
-
-    await vkBridge.subscribe((e) => console.log("vkBridge event", e));
-
-    console.log("vkBridge event sub check ads");
-
-    await vkBridge.subscribe(function (e)
-    {
-        if (e.detail.type === "VKWebAppShowNativeAdsResult") {
-            window.focus();
-            console.log(`Реклама показана e.detail.data = ${JSON.stringify(e.detail.data)}`);
-        }
-
-        if (e.detail.type === "VKWebAppShowNativeAdsFailed") {
-            window.focus();
-            console.log(`Реклама была не показана из-за ошибки: e.detail.data = ${JSON.stringify(e.detail.data)}`);
-        }
-
-        if (e.detail.type === "VKWebAppResizeWindowResult") {
-            console.log(`Поменяли размер окна ${e.detail.data.width}x${e.detail.data.height}`);
-        }
-
-        
-        if (e.detail.type === "VKWebAppStorageGetFailed") {
-            console.log(`Ошибка при попытке выгрузить данные: e.detail.data = ${JSON.stringify(e.detail.data)}`);
-        }
-    });
-
-    console.log("vkBridge GetToken");
 
     try
     {
