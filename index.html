@@ -130,6 +130,7 @@
 
         const script = document.createElement("script");
         script.src = loaderUrl;
+        script.async = false;
         script.onload = async function () {
             try {
                 InitMapFunctionApi();
@@ -151,6 +152,7 @@
         function CreateSdkScriptElement() {
             let scriptSdk = document.createElement("script");
             scriptSdk.type = "module";
+            scriptSdk.async = false;
             return scriptSdk;
         }
 
