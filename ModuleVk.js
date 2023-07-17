@@ -24,12 +24,11 @@ export async function InitVk()
     
         if (data.result)
         {
-            console.log("Is init SDK VK");
             window.addEventListener('unload', (event) => myGameInstance.SendMessage("WebDataManager", "SaveByExit"));
             await InitLoadData();
         } else
         {
-            console.log("Is not inited SDK VK");
+            console.error("Is not inited SDK VK");
         }
     }
     catch(exception)
