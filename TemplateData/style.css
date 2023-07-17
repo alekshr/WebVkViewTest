@@ -21,6 +21,11 @@ body {
   }
 }
 
+canvas{
+  resize: both;
+  overflow: auto;
+}
+
 #unity-loading-bar {
   position: absolute;
   left: 30%;
