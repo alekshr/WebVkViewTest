@@ -35,6 +35,7 @@
 
         const isDebugEruda = true;
         const maxPixelRatio = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ? 3.0 : 1.0;
+        window.devicePixelRatio = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ? 3.0 : 1.0;
         const hideFullScreenButton = "";
         const buildUrl = "Build";
         const loaderUrl = buildUrl + "/Vk.loader.js";
@@ -46,7 +47,7 @@
             companyName: "Uspex",
             productName: "X2 Block Match",
             productVersion: "1.2.1",
-            devicePixelRatio: maxPixelRatio,
+            devicePixelRatio: 1.0,
         };
 
         if (isDebugEruda) {
