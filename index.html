@@ -42,7 +42,7 @@
             dataUrl: buildUrl + "/Vk.data" + `?version=${versionBuild}` + `${numberVersion}`,
             frameworkUrl: buildUrl + "/Vk.framework.js" + `?version=${versionBuild}` + `${numberVersion}`,
             codeUrl: buildUrl + "/Vk.wasm" + `?version=${versionBuild}` + `${numberVersion}`,
-                streamingAssetsUrl: "StreamingAssets",
+            streamingAssetsUrl: "StreamingAssets",
             companyName: "Uspex",
             productName: "X2 Block Match",
             productVersion: "1.2.1",
@@ -157,8 +157,16 @@
         }
 
         function SetMaxSize() {
-            canvas.width = document.documentElement.clientWidth;
-            canvas.height = document.documentElement.clientHeight;
+            // canvas.width = document.documentElement.clientWidth;
+            // canvas.height = document.documentElement.clientHeight;
+
+            if (window.innerHeight / window.innerWidth < canvas.height / canvas.width) {
+                canvas.style.height = window.innerHeight + 'px';
+                canvas.style.width = window.innerHeight / canvas.height / canvas.width + 'px';
+            } else {
+                canvas.style.width = window.innerWidth + 'px';
+                canvas.style.height = window.innerWidth * canvas.height / canvas.width + 'px';
+            }
         }
 
         function ShowReward() {
