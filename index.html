@@ -35,7 +35,7 @@
 
         const isDebugEruda = true;
         const maxPixelRatio = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ? 3.0 : 1.0;
-        canvas.scale(maxPixelRatio, maxPixelRatio);
+        canvas.getContext("2d").scale(maxPixelRatio, maxPixelRatio);
         const hideFullScreenButton = "";
         const buildUrl = "Build";
         const loaderUrl = buildUrl + "/Vk.loader.js";
