@@ -167,6 +167,9 @@
             try {
                 let ctx = canvas.getContext('2d');
                 let scale = 1;
+                console.log(`is context = ${canvas.getContext('2d')}`);
+
+                
                 ctx.scale(scale, scale);
                 ctx.setTransform(1, 0, 0, 1, 0, 0);
             } catch (exc) {
