@@ -28,7 +28,7 @@
         import { functionApi, functionApiKeys, InitMapFunctionApi, platform } from './ModulePlatform.js';
         import { GenerateId } from './ModuleRandomId.js';
         const versionBuild = "1.2.1"
-        const numberVersion = 1;
+        const numberVersion = 2;
         const canvas = document.querySelector("#unity-canvas");
         const maxWidth = 645;
         const maxHeight = 975;
@@ -171,7 +171,9 @@
                 ctx.scale(scale, scale);
                 ctx.setTransform(1, 0, 0, 1, 0, 0);
             } catch (exc) {
-                console.error(exc.Message);
+                console.error(JSON.stringify(exc));
+                console.error(exc.message);
+                console.error(exc);
             }
 
         }
