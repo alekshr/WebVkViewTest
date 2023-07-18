@@ -142,6 +142,7 @@
                 InitUnityGame(unityInstance);
                 loadingBar.style.display = "none";
                 SetMaxSize();
+                ApplyZoom();
                 window.addEventListener('resize', SetMaxSize);
             }
             catch (e) {
@@ -160,7 +161,6 @@
         function SetMaxSize() {
             canvas.width = document.documentElement.clientWidth;
             canvas.height = document.documentElement.clientHeight;
-            ApplyZoom();
         }
 
         function ApplyZoom() {
