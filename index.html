@@ -167,12 +167,15 @@
                 canvas.backingStorePixelRatio || 1;
 
             let ratio = devicePixelRatio / backingStoreRatio;
+            let sizeOnScreen = canvas.getBoundingClientRect();
 
-            // Set the canvas dimensions accounting for the device pixel ratio
-            canvas.width = document.documentElement.clientWidth * ratio;
-            canvas.height = document.documentElement.clientHeight * ratio;
-            let ctx = canvas.getContext('2d');
-            ctx.scale(dpr, dpr);
+// Set our canvas size equal to that of the screen size x the pixel ratio.
+            canvas.width = sizeOnScreen.width * pixelRatio;
+            canvas.height = sizeOnScreen.height * pixelRatio;
+
+            // // Set the canvas dimensions accounting for the device pixel ratio
+            // canvas.width = document.documentElement.clientWidth * ratio;
+            // canvas.height = document.documentElement.clientHeight * ratio;
         }
 
         function ApplyZoom() {
