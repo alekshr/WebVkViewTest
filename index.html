@@ -28,7 +28,7 @@
         import { functionApi, functionApiKeys, InitMapFunctionApi, platform } from './ModulePlatform.js';
         import { GenerateId } from './ModuleRandomId.js';
         const versionBuild = "1.2.1"
-        const numberVersion = 6;
+        const numberVersion = 8;
         const canvas = document.querySelector("#unity-canvas");
         const maxWidth = 645;
         const maxHeight = 975;
@@ -139,10 +139,10 @@
                 let unityInstance = await createUnityInstance(canvas, config, function (progress) {
                     progressBar.style.width = 100 * progress + "%";
                 });
-                // SetMaxSize();
-                // window.addEventListener('resize', SetMaxSize);
                 InitUnityGame(unityInstance);
                 loadingBar.style.display = "none";
+                SetMaxSize();
+                window.addEventListener('resize', SetMaxSize);
             }
             catch (e) {
                 console.log(JSON.stringify(e));
