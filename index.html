@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" id="viewport-site"/>
-    <title>X2 Block Match</title>
+    <title>X2 Solitaire Merge-2048 Puzzle</title>
     <link rel="stylesheet" href="TemplateData/style.css"/>
     <link rel="stylesheet" href="TemplateData/banner.css"/>
 </head>
@@ -27,26 +27,26 @@
         import { InitUnityGame, myGameInstance } from './ModuleGame.js';
         import { functionApi, functionApiKeys, InitMapFunctionApi, platform } from './ModulePlatform.js';
         import { GenerateId } from './ModuleRandomId.js';
-        const versionBuild = "1.2.1"
-        const numberVersion = 1;
+        const versionBuild = "1.0.2";
+        const numberBuild = "1";
         const canvas = document.querySelector("#unity-canvas");
+        const canvasContext = canvas.getContext('2d');
         const maxWidth = 645;
         const maxHeight = 975;
-
         const isDebugEruda = false;
         const maxPixelRatio = 1.0;
         const hideFullScreenButton = "";
         const buildUrl = "Build";
-        const loaderUrl = buildUrl + "/Vk.loader.js";
+        const loaderUrl = buildUrl + "/Vk.loader.js" + `?${versionBuild}.${numberBuild}`;
         const config = {
             dataUrl: buildUrl + "/Vk.data" + "?version=" + String(GenerateId(32)),
-            frameworkUrl: buildUrl + "/Vk.framework.js" + `?version=${versionBuild}` + `${numberVersion}`,
-            codeUrl: buildUrl + "/Vk.wasm" + `?version=${versionBuild}` + `${numberVersion}`,
-                streamingAssetsUrl: "StreamingAssets",
+            frameworkUrl: buildUrl + "/Vk.framework.js" + "?version=" + `?${versionBuild}.${numberBuild}`,
+            codeUrl: buildUrl + "/Vk.wasm" + "?version=" + `?${versionBuild}.${numberBuild}`,
+            streamingAssetsUrl: "StreamingAssets",
             companyName: "Uspex",
-            productName: "X2 Block Match",
-            productVersion: "1.2.1",
-            devicePixelRatio: maxPixelRatio,
+            productName: "X2 Solitaire Merge-2048 Puzzle",
+            productVersion: "1.0.2",
+            devicePixelRatio: maxPixelRatio
         };
 
         if (isDebugEruda) {
@@ -125,8 +125,8 @@
         window.CallPrompt = CallPrompt;
         window.InviteFriends = InviteFriends;
         window.ActivityBanner = ActivityBanner;
+        window.CheckBrowser = CheckBrowser;
         window.SetValueLeaderboard = SetValueLeaderboard;
-
 
 
         const script = document.createElement("script");
@@ -145,8 +145,8 @@
                 loadingBar.style.display = "none";
             }
             catch (e) {
-                console.log(JSON.stringify(e));
-                alert(JSON.stringify(e));
+                console.log(e);
+                alert(e);
             }
         };
 
@@ -309,6 +309,7 @@
             }
         }
 
+
         function SetValueLeaderboard(name, score) {
             if (functionApi.has(functionApiKeys.YandexSetValueLeaderboard)) {
                 functionApi.get(functionApiKeys.YandexSetValueLeaderboard)(name, score);
@@ -316,7 +317,6 @@
                 console.log(`This function is not supported enviroment data load ${platform}`);
             }
         }
-
 
         function CallPrompt(objSource, text, title, msgOnEdit) {
             let result = prompt(title, text);
@@ -329,6 +329,32 @@
                 window.focus();
                 return;
             }
+        }
+
+        function CheckBrowser() {
+            const test = regexp => regexp.test(navigator.userAgent);
+            let browserType = "";
+            if (test(/opr\//i) || !!window.opr) {
+                browserType = 'Opera';
+            } else if (test(/edg/i)) {
+                browserType = 'Microsoft Edge';
+            } else if (test(/chrome|chromium|crios/i)) {
+                browserType = 'Google Chrome';
+            } else if (test(/firefox|fxios/i)) {
+                browserType = 'Mozilla Firefox';
+            } else if (test(/safari/i)) {
+                browserType = 'Apple Safari';
+            } else if (test(/trident/i)) {
+                browserType = 'Microsoft Internet Explorer';
+            } else if (test(/ucbrowser/i)) {
+                browserType = 'UC Browser';
+            } else if (test(/samsungbrowser/i)) {
+                browserType = 'Samsung Browser';
+            } else {
+                browserType = 'Unknown browser';
+            }
+
+            return browserType;
         }
 
         function OpenUrlNewTab(url) {

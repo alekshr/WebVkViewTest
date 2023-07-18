@@ -1,7 +1,8 @@
-import { myGameInstance } from './ModuleGame.js';
-import { Sleep } from './ModuleSleep.js';
-import { decodeHtmlEntity } from './ModuleLZW.js';
+import { myGameInstance } from './ModuleGame.js'
+import { Sleep } from './ModuleSleep.js'
+import { decodeHtmlEntity } from './ModuleLZW.js'
 
+const width = 645;
 
 let loadData = "";
 let isSaveData = false;
@@ -13,35 +14,67 @@ const timeWaitSave = 3000;
 
 export async function InitVk()
 {
+    
+    console.log("vkBridge Init");
+
+    let data = await vkBridge.send("VKWebAppInit", {});
+
+    console.log("vkBridge event sub all event");
+
     await vkBridge.subscribe((e) => console.log("vkBridge event", e));
+
+    console.log("vkBridge event sub check ads");
+
     await vkBridge.subscribe(function (e)
     {
-        if (e.detail.type === "VKWebAppShowNativeAdsResult")
-        {
+        if (e.detail.type === "VKWebAppShowNativeAdsResult") {
             window.focus();
-            console.log(`Реклама показана e.detail.data = ${e.detail.data}`);
+            console.log(`Реклама показана e.detail.data = ${JSON.stringify(e.detail.data)}`);
         }
 
-        if (e.detail.type === "VKWebAppShowNativeAdsFailed")
-        {
+        if (e.detail.type === "VKWebAppShowNativeAdsFailed") {
             window.focus();
-            console.log(`Реклама была не показана из-за ошибки: e.detail.data = ${e.detail.data}`);
+            console.log(`Реклама была не показана из-за ошибки: e.detail.data = ${JSON.stringify(e.detail.data)}`);
+        }
+
+        if (e.detail.type === "VKWebAppResizeWindowResult") {
+            console.log(`Поменяли размер окна ${e.detail.data.width}x${e.detail.data.height}`);
+        }
+
+        if (e.detail.type === "VKWebAppStorageGetFailed") {
+            console.log(`Ошибка при попытке выгрузить данные: e.detail.data = ${JSON.stringify(e.detail.data)}`);
         }
     });
 
-    let data = await vkBridge.send("VKWebAppInit", {});
-    let dataGetAccessToken = await vkBridge.send('VKWebAppGetAuthToken', { app_id: vkAppId, scope: '' });
-    accessToken = dataGetAccessToken.access_token;
+    console.log("vkBridge GetToken");
 
-    if (data.result)
+    try
     {
-        console.log("Is init SDK VK");
-        await InitLoadData();
-        window.addEventListener('unload', (event) => myGameInstance.SendMessage("WebDataManager", "SaveByExit"));
+        let dataGetAccessToken = await vkBridge.send('VKWebAppGetAuthToken', { app_id: vkAppId, scope: '' });
+        accessToken = dataGetAccessToken.access_token;
+    
+        if (data.result)
+        {
+            console.log("Is init SDK VK");
+            window.addEventListener('unload', (event) => myGameInstance.SendMessage("WebDataManager", "SaveByExit"));
+            await InitLoadData();
+        } else
+        {
+            console.log("Is not inited SDK VK");
+        }
+    }
+    catch(exception)
+    {
+        console.error(JSON.stringify(exception));
+    }
+   
+}
 
-    } else
-    {
-        console.log("Is not inited SDK VK");
+function IsSupportedApi(method){
+    if (vkBridge.supports(method)) {
+        console.log(`Есть поддержка ${method}`);
+    }else{
+        console.log(`Нет поддержки ${method}`);
     }
 }
 
@@ -96,7 +129,7 @@ async function VkActionAds(nameApiMethod,
     catch (e)
     {
         myGameInstance.SendMessage(nameGameObjectUnity, callBackResult, 0);
-        console.log(`Vk Action e = ${JSON.stringify(e)}`);
+        console.error(`Vk Action e = ${JSON.stringify(e)}`);
     }
 }
 
@@ -147,6 +180,7 @@ export async function VkSaveCloud(jsonData, flush)
                 size = size + len;
                 lenData = lenData - len;
 
+
                 let formData = new FormData();
                 formData.append("key", "SavedStringKey" + String(index));
                 formData.append("value", sliceStr);
@@ -154,17 +188,13 @@ export async function VkSaveCloud(jsonData, flush)
                 formData.append("v", "5.131");
 
                 let isRequestBeacon = navigator.sendBeacon(`https://api.vk.com/method/storage.set`, formData);
-
-                console.log(`Отправили ан секрвер вк = ${isRequestBeacon}`);
-
-                localStorage.setItem("unloadSaveCloud", false);
                 index++;
             }
         }
     }
     catch (e)
     {
-        console.log(`save exception Message: ${e.message}`)
+        console.error(`save exception Message: ${e.message}`)
     }
 }
 
@@ -177,24 +207,35 @@ export async function VkInviteFriends()
     }
     catch (e)
     {
-        console.log(e);
+        console.error(e);
     }
 }
 
 
+
 async function InitLoadData()
 {
-    let keysLoad = await vkBridge.send('VKWebAppStorageGetKeys', { count: 10, offset: 0 });
-    let dataKeys = await vkBridge.send('VKWebAppStorageGet', {
-        keys: keysLoad.keys
-    });
-
-    for (let index = 0; index < keysLoad.keys.length; index++)
+    try
     {
-        if (dataKeys.keys[index].key.indexOf("SavedStringKey") >= 0)
+        console.log("vkBridge Init Data");
+
+        let keysLoad = await vkBridge.send('VKWebAppStorageGetKeys', { count: 10, offset: 0 });
+        let dataKeys = await vkBridge.send('VKWebAppStorageGet', {
+            keys: keysLoad.keys
+        });
+    
+        for (let index = 0; index < keysLoad.keys.length; index++)
         {
-            loadData += dataKeys.keys[index].value;
+            if (dataKeys.keys[index].key.indexOf("SavedStringKey") >= 0)
+            {
+                loadData += dataKeys.keys[index].value;
+            }
         }
+        loadData = decodeHtmlEntity(loadData);
+        console.log("vkBridge Data is Initing");
     }
-    loadData = decodeHtmlEntity(loadData);
+    catch(exception)
+    {
+        console.error(JSON.stringify(exception));
+    } 
 }
