@@ -167,7 +167,6 @@
             try {
                 let ctx = canvas.getContext('2d');
                 let scale = 1;
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.scale(scale, scale);
                 ctx.setTransform(1, 0, 0, 1, 0, 0);
             } catch (exc) {
