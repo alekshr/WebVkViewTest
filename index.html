@@ -134,7 +134,6 @@
         script.async = false;
         script.onload = async function () {
             try {
-                SetMaxSize();
                 InitMapFunctionApi();
                 await functionApi.get(functionApiKeys.InitSDK)();
                 let unityInstance = await createUnityInstance(canvas, config, function (progress) {
@@ -142,14 +141,18 @@
                 });
                 InitUnityGame(unityInstance);
                 loadingBar.style.display = "none";
-                SetMaxSize();
-                window.addEventListener('resize', SetMaxSize);
+                setTimeout(function () {
+                    SetMaxSize();
+                    window.addEventListener('resize', SetMaxSize);
+                }, 2000);
             }
             catch (e) {
                 console.log(JSON.stringify(e));
                 alert(JSON.stringify(e));
             }
         };
+
+
 
         function CreateSdkScriptElement() {
             let scriptSdk = document.createElement("script");
