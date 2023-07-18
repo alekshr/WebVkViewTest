@@ -141,10 +141,8 @@
                 });
                 InitUnityGame(unityInstance);
                 loadingBar.style.display = "none";
-                setTimeout(function () {
-                    SetMaxSize();
-                    window.addEventListener('resize', SetMaxSize);
-                }, 2000);
+                SetMaxSize();
+                window.addEventListener('resize', SetMaxSize);
             }
             catch (e) {
                 console.log(JSON.stringify(e));
@@ -164,7 +162,6 @@
         function SetMaxSize() {
             canvas.width = document.documentElement.clientWidth;
             canvas.height = document.documentElement.clientHeight;
-            ApplyZoom();
         }
 
         function ApplyZoom() {
