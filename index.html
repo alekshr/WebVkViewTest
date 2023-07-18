@@ -32,7 +32,6 @@
         const canvas = document.querySelector("#unity-canvas");
         const maxWidth = 645;
         const maxHeight = 975;
-        const renderer = new THREE.WebGLRenderer( { alpha: true } );  
         const isDebugEruda = false;
         const maxPixelRatio = 1.0;
         const hideFullScreenButton = "";
@@ -160,9 +159,18 @@
         }
 
         function SetMaxSize() {
-            canvas.width = document.documentElement.clientWidth;
-            canvas.height = document.documentElement.clientHeight;
-            renderer.setSize(window.innerWidth, window.innerHeight)
+            let devicePixelRatio = window.devicePixelRatio || 1;
+            let backingStoreRatio = canvas.webkitBackingStorePixelRatio ||
+                canvas.mozBackingStorePixelRatio ||
+                canvas.msBackingStorePixelRatio ||
+                canvas.oBackingStorePixelRatio ||
+                canvas.backingStorePixelRatio || 1;
+
+            let ratio = devicePixelRatio / backingStoreRatio;
+
+            // Set the canvas dimensions accounting for the device pixel ratio
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = canvas.offsetHeight * ratio;
         }
 
         function ApplyZoom() {
