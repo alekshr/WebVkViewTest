@@ -41,8 +41,8 @@
         const loaderUrl = buildUrl + "/Vk.loader.js";
         const config = {
             dataUrl: buildUrl + "/Vk.data" + "?version=" + String(GenerateId(32)),
-            frameworkUrl: buildUrl + "/Vk.framework.js" + `?version=${versionBuild}` + `${numberVersion}`,
-            codeUrl: buildUrl + "/Vk.wasm" + `?version=${versionBuild}` + `${numberVersion}`,
+            frameworkUrl: buildUrl + "/Vk.framework.js" + `?version=${versionBuild}.${numberVersion}`,
+            codeUrl: buildUrl + "/Vk.wasm" + `?version=${versionBuild}.${numberVersion}`,
                 streamingAssetsUrl: "StreamingAssets",
             companyName: "Uspex",
             productName: "X2 Block Match",
