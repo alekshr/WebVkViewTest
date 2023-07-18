@@ -139,8 +139,8 @@
                 let unityInstance = await createUnityInstance(canvas, config, function (progress) {
                     progressBar.style.width = 100 * progress + "%";
                 });
-                SetMaxSize();
-                window.addEventListener('resize', SetMaxSize);
+                // SetMaxSize();
+                // window.addEventListener('resize', SetMaxSize);
                 InitUnityGame(unityInstance);
                 loadingBar.style.display = "none";
             }
