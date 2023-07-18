@@ -160,7 +160,21 @@
         function SetMaxSize() {
             canvas.width = document.documentElement.clientWidth;
             canvas.height = document.documentElement.clientHeight;
-            canvas.style.transform = `scale(1)`;
+            ApplyZoom();
+        }
+
+        function ApplyZoom() {
+            // Get the WebGL rendering context
+            let scale = 1;
+            let gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+
+            // Set the canvas size based on the scaled dimensions
+            canvas.width = canvas.offsetWidth * scale;
+            canvas.height = canvas.offsetHeight * scale;
+
+            // Apply the scaling transformation using WebGL
+            gl.viewport(0, 0, canvas.width, canvas.height);
+            myGameInstance.SetSize(canvas.width, canvas.height);
         }
 
         function ShowReward() {
