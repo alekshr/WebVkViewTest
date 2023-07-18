@@ -143,7 +143,6 @@
                 loadingBar.style.display = "none";
                 SetMaxSize();
                 window.addEventListener('resize', SetMaxSize);
-                window.addEventListener('resize', () => renderer.setSize(window.innerWidth, window.innerHeight));
             }
             catch (e) {
                 console.log(JSON.stringify(e));
@@ -163,6 +162,7 @@
         function SetMaxSize() {
             canvas.width = document.documentElement.clientWidth;
             canvas.height = document.documentElement.clientHeight;
+            renderer.setSize(window.innerWidth, window.innerHeight)
         }
 
         function ApplyZoom() {
