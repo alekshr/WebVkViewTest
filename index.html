@@ -164,22 +164,11 @@
             // canvas.width = document.documentElement.clientWidth;
             // canvas.height = document.documentElement.clientHeight;
 
-            let devicePixelRatio = window.devicePixelRatio || 1;
-                let backingStoreRatio = canvas.webkitBackingStorePixelRatio ||
-                    canvas.mozBackingStorePixelRatio ||
-                    canvas.msBackingStorePixelRatio ||
-                    canvas.oBackingStorePixelRatio ||
-                    canvas.backingStorePixelRatio || 1;
-
-                let lratio = devicePixelRatio / backingStoreRatio;
-                let sizeOnScreen = canvas.getBoundingClientRect();
-
-                // Set the canvas dimensions accounting for the device pixel ratio
-                canvas.width = document.documentElement.clientWidth * lratio;
-                canvas.height = document.documentElement.clientHeight * lratio;
+            
 
             if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
-
+                canvas.width = document.documentElement.clientWidth;
+                canvas.height = document.documentElement.clientHeight;
                 var ww = window.screen.width;
                 var mw = 645; // min width of site
                 var ratio = ww / mw; //calculate ratio
@@ -190,6 +179,20 @@
                 else { //regular size
                     viewport_meta_tag.setAttribute('content', 'initial-scale=1.0, maximum-scale=1, minimum-scale=1.0, user-scalable=yes, width=' + ww);
                 }
+            } else {
+                let devicePixelRatio = window.devicePixelRatio || 1;
+                let backingStoreRatio = canvas.webkitBackingStorePixelRatio ||
+                    canvas.mozBackingStorePixelRatio ||
+                    canvas.msBackingStorePixelRatio ||
+                    canvas.oBackingStorePixelRatio ||
+                    canvas.backingStorePixelRatio || 1;
+
+                let ratio = devicePixelRatio / backingStoreRatio;
+                let sizeOnScreen = canvas.getBoundingClientRect();
+
+                // Set the canvas dimensions accounting for the device pixel ratio
+                canvas.width = document.documentElement.clientWidth * ratio;
+                canvas.height = document.documentElement.clientHeight * ratio;
             }
 
         }
