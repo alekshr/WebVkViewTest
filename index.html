@@ -30,7 +30,6 @@
         const versionBuild = "1.2.1"
         const numberVersion = 3;
         const canvas = document.querySelector("#unity-canvas");
-        const canvasContext = canvas.getContext('2d');
         const maxWidth = 645;
         const maxHeight = 975;
 
@@ -162,9 +161,9 @@
             canvas.width = document.documentElement.clientWidth;
             canvas.height = document.documentElement.clientHeight;
 
-            canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-            canvasContext.scale(scale, scale);
-            canvasContext.setTransform(1, 0, 0, 1, 0, 0);
+            canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+            canvas.getContext('2d').scale(scale, scale);
+            canvas.getContext('2d').setTransform(1, 0, 0, 1, 0, 0);
         }
 
         function ShowReward() {
