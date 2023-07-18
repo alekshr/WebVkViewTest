@@ -32,7 +32,7 @@
         const canvas = document.querySelector("#unity-canvas");
         const maxWidth = 645;
         const maxHeight = 975;
-
+        const renderer = new THREE.WebGLRenderer( { alpha: true } );  
         const isDebugEruda = false;
         const maxPixelRatio = 1.0;
         const hideFullScreenButton = "";
@@ -143,6 +143,7 @@
                 loadingBar.style.display = "none";
                 SetMaxSize();
                 window.addEventListener('resize', SetMaxSize);
+                window.addEventListener('resize', () => renderer.setSize(window.innerWidth, window.innerHeight));
             }
             catch (e) {
                 console.log(JSON.stringify(e));
