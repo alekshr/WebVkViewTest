@@ -28,7 +28,7 @@
         import { functionApi, functionApiKeys, InitMapFunctionApi, platform } from './ModulePlatform.js';
         import { GenerateId } from './ModuleRandomId.js';
         const versionBuild = "1.2.1"
-        const numberVersion = 5;
+        const numberVersion = 1;
         const canvas = document.querySelector("#unity-canvas");
         const maxWidth = 645;
         const maxHeight = 975;
@@ -160,10 +160,6 @@
         function SetMaxSize() {
             canvas.width = document.documentElement.clientWidth;
             canvas.height = document.documentElement.clientHeight;
-
-            // canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-            // canvas.getContext('2d').scale(1, 1);
-            // canvas.getContext('2d').setTransform(1, 0, 0, 1, 0, 0);
         }
 
         function ShowReward() {
