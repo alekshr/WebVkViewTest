@@ -30,6 +30,7 @@
         const versionBuild = "1.2.1"
         const numberVersion = 3;
         const canvas = document.querySelector("#unity-canvas");
+        const contextCanvas = canvas.getContext('2d');
         const maxWidth = 645;
         const maxHeight = 975;
 
@@ -165,13 +166,11 @@
 
         function ApplyZoom() {
             try {
-                let ctx = canvas.getContext('2d');
-                let scale = 1;
-                console.log(`is context = ${canvas.getContext('2d')}`);
+                console.log(`is context = ${contextCanvas}`);
+                contextCanvas.clearRect(0, 0, canvas.width, canvas.height);
 
-                
-                ctx.scale(scale, scale);
-                ctx.setTransform(1, 0, 0, 1, 0, 0);
+                contextCanvas.scale(1, 1);
+                contextCanvas.setTransform(1, 0, 0, 1, 0, 0);
             } catch (exc) {
                 console.error(JSON.stringify(exc));
                 console.error(exc.message);
