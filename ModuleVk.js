@@ -160,7 +160,6 @@ export async function VkSaveCloud(jsonData, flush)
                 localStorage.setItem("unloadSaveCloud", false);
                 index++;
             }
-            navigator.sendBeacon(`https://api.vk.com/method/storage.set`, formData);
         }
     }
     catch (e)
