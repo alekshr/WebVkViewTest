@@ -30,7 +30,6 @@
         const versionBuild = "1.2.1"
         const numberVersion = 3;
         const canvas = document.querySelector("#unity-canvas");
-        const contextCanvas = canvas.getContext('2d');
         const maxWidth = 645;
         const maxHeight = 975;
 
@@ -108,6 +107,7 @@
 
         canvas.addEventListener('touchstart', () => { window.focus(); });
         canvas.addEventListener('pointerdown', () => { window.focus(); });
+        document.addEventListener('DOMContentLoaded', ApplyZoom);
 
         window.ShowReward = ShowReward;
         window.ShowInterstitial = ShowInterstitial;
@@ -143,7 +143,6 @@
                 InitUnityGame(unityInstance);
                 loadingBar.style.display = "none";
                 SetMaxSize();
-                ApplyZoom();
                 window.addEventListener('resize', SetMaxSize);
             }
             catch (e) {
@@ -166,6 +165,7 @@
 
         function ApplyZoom() {
             try {
+                const contextCanvas = canvas.getContext('2d');
                 console.log(`is context = ${contextCanvas}`);
                 contextCanvas.clearRect(0, 0, canvas.width, canvas.height);
 
