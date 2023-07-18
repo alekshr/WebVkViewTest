@@ -171,6 +171,8 @@
             // Set the canvas dimensions accounting for the device pixel ratio
             canvas.width = document.documentElement.clientWidth * ratio;
             canvas.height = document.documentElement.clientHeight * ratio;
+            let ctx = canvas.getContext('2d');
+            ctx.scale(dpr, dpr);
         }
 
         function ApplyZoom() {
