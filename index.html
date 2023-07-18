@@ -3,6 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" id="viewport-site" content="width=device-width, initial-scale=1.0">
     <title>X2 Block Match</title>
     <link rel="stylesheet" href="TemplateData/style.css">
     <link rel="stylesheet" href="TemplateData/banner.css">
@@ -158,22 +159,39 @@
         }
 
         function SetMaxSize() {
-            // let devicePixelRatio = window.devicePixelRatio || 1;
-            // let backingStoreRatio = canvas.webkitBackingStorePixelRatio ||
-            //     canvas.mozBackingStorePixelRatio ||
-            //     canvas.msBackingStorePixelRatio ||
-            //     canvas.oBackingStorePixelRatio ||
-            //     canvas.backingStorePixelRatio || 1;
 
-            // let ratio = devicePixelRatio / backingStoreRatio;
-            // let sizeOnScreen = canvas.getBoundingClientRect();
 
-            // // Set the canvas dimensions accounting for the device pixel ratio
-            // canvas.width = document.documentElement.clientWidth * ratio;
-            // canvas.height = document.documentElement.clientHeight * ratio;
+            // canvas.width = document.documentElement.clientWidth;
+            // canvas.height = document.documentElement.clientHeight;
 
-            canvas.width = document.documentElement.clientWidth;
-            canvas.height = document.documentElement.clientHeight;
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+
+                var ww = window.screen.width;
+                var mw = 645; // min width of site
+                var ratio = ww / mw; //calculate ratio
+                var viewport_meta_tag = document.getElementById('viewport-site');
+                if (ww < mw) { //smaller than minimum size
+                    viewport_meta_tag.setAttribute('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=no, width=' + mw);
+                }
+                else { //regular size
+                    viewport_meta_tag.setAttribute('content', 'initial-scale=1.0, maximum-scale=1, minimum-scale=1.0, user-scalable=yes, width=' + ww);
+                }
+            } else {
+                let devicePixelRatio = window.devicePixelRatio || 1;
+                let backingStoreRatio = canvas.webkitBackingStorePixelRatio ||
+                    canvas.mozBackingStorePixelRatio ||
+                    canvas.msBackingStorePixelRatio ||
+                    canvas.oBackingStorePixelRatio ||
+                    canvas.backingStorePixelRatio || 1;
+
+                let ratio = devicePixelRatio / backingStoreRatio;
+                let sizeOnScreen = canvas.getBoundingClientRect();
+
+                // Set the canvas dimensions accounting for the device pixel ratio
+                canvas.width = document.documentElement.clientWidth * ratio;
+                canvas.height = document.documentElement.clientHeight * ratio;
+            }
+
         }
 
         function ApplyZoom() {
