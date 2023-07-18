@@ -28,7 +28,7 @@
         import { functionApi, functionApiKeys, InitMapFunctionApi, platform } from './ModulePlatform.js';
         import { GenerateId } from './ModuleRandomId.js';
         const versionBuild = "1.2.1"
-        const numberVersion = 8;
+        const numberVersion = 9;
         const canvas = document.querySelector("#unity-canvas");
         const maxWidth = 645;
         const maxHeight = 975;
@@ -164,11 +164,16 @@
         }
 
         function ApplyZoom() {
-            let ctx = canvas.getContext('2d');
-            let scale = 1;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.scale(scale, scale);
-            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            try {
+                let ctx = canvas.getContext('2d');
+                let scale = 1;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.scale(scale, scale);
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+            } catch (exc) {
+                console.error(exc.Message);
+            }
+
         }
 
         function ShowReward() {
