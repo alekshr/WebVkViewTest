@@ -28,7 +28,7 @@
         import { functionApi, functionApiKeys, InitMapFunctionApi, platform } from './ModulePlatform.js';
         import { GenerateId } from './ModuleRandomId.js';
         const versionBuild = "1.2.1"
-        const numberVersion = 4;
+        const numberVersion = 6;
         const canvas = document.querySelector("#unity-canvas");
         const maxWidth = 645;
         const maxHeight = 975;
@@ -160,6 +160,7 @@
         function SetMaxSize() {
             canvas.width = document.documentElement.clientWidth;
             canvas.height = document.documentElement.clientHeight;
+            ApplyZoom();
         }
 
         function ApplyZoom() {
