@@ -134,6 +134,7 @@
         script.async = false;
         script.onload = async function () {
             try {
+                SetMaxSize();
                 InitMapFunctionApi();
                 await functionApi.get(functionApiKeys.InitSDK)();
                 let unityInstance = await createUnityInstance(canvas, config, function (progress) {
