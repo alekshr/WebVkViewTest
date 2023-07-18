@@ -1,10 +1,9 @@
-import { InitVk, VkPreloadReward, VkPreloadInterstitial, VkShowReward, VkShowInterstitial, VkLoadCloud, VkSaveCloud, VkInviteFriends } from './ModuleVk.js';
+import { InitVk, VkPreloadReward, VkPreloadInterstitial, VkShowReward, VkShowInterstitial, VkLoadCloud, VkSaveCloud, VkInviteFriends  } from './ModuleVk.js';
 
 
 
 export let functionApi = new Map();
-
-export const platform = "vk";
+export let platform = "";
 
 export const functionApiKeys = Object.freeze({
     InitSDK: Symbol("initSdk"),
@@ -24,11 +23,13 @@ export const functionApiKeys = Object.freeze({
     InitPurchase: Symbol("initPurchase"),
     InviteFriends: Symbol("inviteFriends"),
     ActivityBanner: Symbol("activityBanner"),
+    SetValueLeaderboard: Symbol("setValueLeaderboard"),
 });
 
 export function InitMapFunctionApi()
 {
 
+    platform = "vk";
     functionApi.set(functionApiKeys.InitSDK, InitVk);
     functionApi.set(functionApiKeys.PreloadReward, VkPreloadReward);
     functionApi.set(functionApiKeys.PreloadInterstitial, VkPreloadInterstitial);

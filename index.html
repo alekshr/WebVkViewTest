@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>X2 Block Match</title>
     <link rel="stylesheet" href="TemplateData/style.css">
     <link rel="stylesheet" href="TemplateData/banner.css">
@@ -34,16 +34,16 @@
         const maxWidth = 645;
         const maxHeight = 975;
 
-        const isDebugEruda = true;
+        const isDebugEruda = false;
         const maxPixelRatio = 1.0;
         const hideFullScreenButton = "";
         const buildUrl = "Build";
         const loaderUrl = buildUrl + "/Vk.loader.js";
         const config = {
-            dataUrl: buildUrl + "/Vk.data" + `?version=${versionBuild}` + `${numberVersion}`,
+            dataUrl: buildUrl + "/Vk.data" + "?version=" + String(GenerateId(32)),
             frameworkUrl: buildUrl + "/Vk.framework.js" + `?version=${versionBuild}` + `${numberVersion}`,
             codeUrl: buildUrl + "/Vk.wasm" + `?version=${versionBuild}` + `${numberVersion}`,
-            streamingAssetsUrl: "StreamingAssets",
+                streamingAssetsUrl: "StreamingAssets",
             companyName: "Uspex",
             productName: "X2 Block Match",
             productVersion: "1.2.1",
@@ -126,6 +126,7 @@
         window.CallPrompt = CallPrompt;
         window.InviteFriends = InviteFriends;
         window.ActivityBanner = ActivityBanner;
+        window.SetValueLeaderboard = SetValueLeaderboard;
 
 
 
@@ -160,23 +161,12 @@
         function SetMaxSize() {
             canvas.width = document.documentElement.clientWidth;
             canvas.height = document.documentElement.clientHeight;
-            applyZoom();
+
+            canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+            canvasContext.scale(scale, scale);
+            canvasContext.setTransform(1, 0, 0, 1, 0, 0);
         }
 
-
-        function applyZoom() {
-  // Clear the canvas
-  canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-
-  // Apply the scaling transformation
-  canvasContext.scale(scale, scale);
-
-  // Draw your content on the canvas
-  // ...
-
-  // Reset the transformation to its original state
-  canvasContext.setTransform(1, 0, 0, 1, 0, 0);
-}
         function ShowReward() {
             if (functionApi.has(functionApiKeys.ShowReward)) {
                 functionApi.get(functionApiKeys.ShowReward)();
@@ -294,6 +284,14 @@
         function ActivityBanner(isActivity) {
             if (functionApi.has(functionApiKeys.ActivityBanner)) {
                 functionApi.get(functionApiKeys.ActivityBanner)(isActivity);
+            } else {
+                console.log(`This function is not supported enviroment data load ${platform}`);
+            }
+        }
+
+        function SetValueLeaderboard(name, score) {
+            if (functionApi.has(functionApiKeys.YandexSetValueLeaderboard)) {
+                functionApi.get(functionApiKeys.YandexSetValueLeaderboard)(name, score);
             } else {
                 console.log(`This function is not supported enviroment data load ${platform}`);
             }
