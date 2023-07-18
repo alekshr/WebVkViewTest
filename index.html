@@ -30,6 +30,7 @@
         const versionBuild = "1.2.1"
         const numberVersion = 1;
         const canvas = document.querySelector("#unity-canvas");
+        const canvasContext = canvas.getContext('2d');
         const maxWidth = 645;
         const maxHeight = 975;
 
@@ -159,9 +160,23 @@
         function SetMaxSize() {
             canvas.width = document.documentElement.clientWidth;
             canvas.height = document.documentElement.clientHeight;
-            window.resizeTo(1920, 1080);
+            applyZoom();
         }
 
+
+        function applyZoom() {
+  // Clear the canvas
+  canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Apply the scaling transformation
+  canvasContext.scale(scale, scale);
+
+  // Draw your content on the canvas
+  // ...
+
+  // Reset the transformation to its original state
+  canvasContext.setTransform(1, 0, 0, 1, 0, 0);
+}
         function ShowReward() {
             if (functionApi.has(functionApiKeys.ShowReward)) {
                 functionApi.get(functionApiKeys.ShowReward)();
