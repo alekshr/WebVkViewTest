@@ -1,8 +1,7 @@
-import { myGameInstance } from './ModuleGame.js'
-import { Sleep } from './ModuleSleep.js'
-import { decodeHtmlEntity } from './ModuleLZW.js'
+import { myGameInstance } from './ModuleGame.js';
+import { Sleep } from './ModuleSleep.js';
+import { decodeHtmlEntity } from './ModuleLZW.js';
 
-const width = 645;
 
 let loadData = "";
 let isSaveData = false;
@@ -14,35 +13,35 @@ const timeWaitSave = 3000;
 
 export async function InitVk()
 {
-    
-    let data = await vkBridge.send("VKWebAppInit", {});
-
-    try
+    await vkBridge.subscribe((e) => console.log("vkBridge event", e));
+    await vkBridge.subscribe(function (e)
     {
-        let dataGetAccessToken = await vkBridge.send('VKWebAppGetAuthToken', { app_id: vkAppId, scope: '' });
-        accessToken = dataGetAccessToken.access_token;
-    
-        if (data.result)
+        if (e.detail.type === "VKWebAppShowNativeAdsResult")
         {
-            window.addEventListener('unload', (event) => myGameInstance.SendMessage("WebDataManager", "SaveByExit"));
-            await InitLoadData();
-        } else
-        {
-            console.error("Is not inited SDK VK");
+            window.focus();
+            console.log(`Реклама показана e.detail.data = ${e.detail.data}`);
         }
-    }
-    catch(exception)
-    {
-        console.error(JSON.stringify(exception));
-    }
-   
-}
 
-function IsSupportedApi(method){
-    if (vkBridge.supports(method)) {
-        console.log(`Есть поддержка ${method}`);
-    }else{
-        console.log(`Нет поддержки ${method}`);
+        if (e.detail.type === "VKWebAppShowNativeAdsFailed")
+        {
+            window.focus();
+            console.log(`Реклама была не показана из-за ошибки: e.detail.data = ${e.detail.data}`);
+        }
+    });
+
+    let data = await vkBridge.send("VKWebAppInit", {});
+    let dataGetAccessToken = await vkBridge.send('VKWebAppGetAuthToken', { app_id: vkAppId, scope: '' });
+    accessToken = dataGetAccessToken.access_token;
+
+    if (data.result)
+    {
+        console.log("Is init SDK VK");
+        await InitLoadData();
+        window.addEventListener('unload', (event) => myGameInstance.SendMessage("WebDataManager", "SaveByExit"));
+
+    } else
+    {
+        console.log("Is not inited SDK VK");
     }
 }
 
@@ -97,7 +96,7 @@ async function VkActionAds(nameApiMethod,
     catch (e)
     {
         myGameInstance.SendMessage(nameGameObjectUnity, callBackResult, 0);
-        console.error(`Vk Action e = ${JSON.stringify(e)}`);
+        console.log(`Vk Action e = ${JSON.stringify(e)}`);
     }
 }
 
@@ -130,7 +129,6 @@ export function VkLoadCloud()
     return true;
 }
 
-
 export async function VkSaveCloud(jsonData, flush)
 {
     try
@@ -149,7 +147,6 @@ export async function VkSaveCloud(jsonData, flush)
                 size = size + len;
                 lenData = lenData - len;
 
-
                 let formData = new FormData();
                 formData.append("key", "SavedStringKey" + String(index));
                 formData.append("value", sliceStr);
@@ -157,13 +154,18 @@ export async function VkSaveCloud(jsonData, flush)
                 formData.append("v", "5.131");
 
                 let isRequestBeacon = navigator.sendBeacon(`https://api.vk.com/method/storage.set`, formData);
+
+                console.log(`Отправили ан секрвер вк = ${isRequestBeacon}`);
+
+                localStorage.setItem("unloadSaveCloud", false);
                 index++;
             }
+            navigator.sendBeacon(`https://api.vk.com/method/storage.set`, formData);
         }
     }
     catch (e)
     {
-        console.error(`save exception Message: ${e.message}`)
+        console.log(`save exception Message: ${e.message}`)
     }
 }
 
@@ -176,35 +178,24 @@ export async function VkInviteFriends()
     }
     catch (e)
     {
-        console.error(e);
+        console.log(e);
     }
 }
 
 
-
 async function InitLoadData()
 {
-    try
-    {
-        console.log("vkBridge Init Data");
+    let keysLoad = await vkBridge.send('VKWebAppStorageGetKeys', { count: 10, offset: 0 });
+    let dataKeys = await vkBridge.send('VKWebAppStorageGet', {
+        keys: keysLoad.keys
+    });
 
-        let keysLoad = await vkBridge.send('VKWebAppStorageGetKeys', { count: 10, offset: 0 });
-        let dataKeys = await vkBridge.send('VKWebAppStorageGet', {
-            keys: keysLoad.keys
-        });
-    
-        for (let index = 0; index < keysLoad.keys.length; index++)
-        {
-            if (dataKeys.keys[index].key.indexOf("SavedStringKey") >= 0)
-            {
-                loadData += dataKeys.keys[index].value;
-            }
-        }
-        loadData = decodeHtmlEntity(loadData);
-        console.log("vkBridge Data is Initing");
-    }
-    catch(exception)
+    for (let index = 0; index < keysLoad.keys.length; index++)
     {
-        console.error(JSON.stringify(exception));
-    } 
+        if (dataKeys.keys[index].key.indexOf("SavedStringKey") >= 0)
+        {
+            loadData += dataKeys.keys[index].value;
+        }
+    }
+    loadData = decodeHtmlEntity(loadData);
 }
