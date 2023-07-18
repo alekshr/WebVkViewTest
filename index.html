@@ -164,27 +164,35 @@
         }
 
         function ApplyZoom() {
+            try {
+                let scale = 1;
+                let gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+
+                // Set the canvas size based on the scaled dimensions
+                canvas.width = canvas.offsetWidth * scale;
+                canvas.height = canvas.offsetHeight * scale;
+
+                // Apply the scaling transformation using WebGL
+                gl.viewport(0, 0, canvas.width, canvas.height);
+                gl.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Apply the scaling transformation
+                gl.scale(scale, scale);
+
+                // Draw your content on the canvas
+                // ...
+
+                // Reset the transformation to its original state
+                gl.setTransform(1, 0, 0, 1, 0, 0);
+                myGameInstance.SetSize(canvas.width, canvas.height);
+            }
             // Get the WebGL rendering context
-            let scale = 1;
-            let gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
 
-            // Set the canvas size based on the scaled dimensions
-            canvas.width = canvas.offsetWidth * scale;
-            canvas.height = canvas.offsetHeight * scale;
+            catch (exc) {
+                console.error(exc);
+                console.error(JSON.stringify(exc));
 
-            // Apply the scaling transformation using WebGL
-            gl.viewport(0, 0, canvas.width, canvas.height);
-            gl.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Apply the scaling transformation
-            gl.scale(scale, scale);
-
-            // Draw your content on the canvas
-            // ...
-
-            // Reset the transformation to its original state
-            gl.setTransform(1, 0, 0, 1, 0, 0);
-            myGameInstance.SetSize(canvas.width, canvas.height);
+            }
         }
 
         function ShowReward() {
