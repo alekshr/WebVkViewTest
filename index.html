@@ -107,7 +107,6 @@
 
         canvas.addEventListener('touchstart', () => { window.focus(); });
         canvas.addEventListener('pointerdown', () => { window.focus(); });
-        document.addEventListener('DOMContentLoaded', ApplyZoom);
 
         window.ShowReward = ShowReward;
         window.ShowInterstitial = ShowInterstitial;
@@ -161,22 +160,7 @@
         function SetMaxSize() {
             canvas.width = document.documentElement.clientWidth;
             canvas.height = document.documentElement.clientHeight;
-        }
-
-        function ApplyZoom() {
-            try {
-                const contextCanvas = canvas.getContext('2d');
-                console.log(`is context = ${contextCanvas}`);
-                contextCanvas.clearRect(0, 0, canvas.width, canvas.height);
-
-                contextCanvas.scale(1, 1);
-                contextCanvas.setTransform(1, 0, 0, 1, 0, 0);
-            } catch (exc) {
-                console.error(JSON.stringify(exc));
-                console.error(exc.message);
-                console.error(exc);
-            }
-
+            canvas.style.transform = `scale(1)`;
         }
 
         function ShowReward() {
