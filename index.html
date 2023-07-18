@@ -28,7 +28,7 @@
         import { functionApi, functionApiKeys, InitMapFunctionApi, platform } from './ModulePlatform.js';
         import { GenerateId } from './ModuleRandomId.js';
         const versionBuild = "1.0.2";
-        const numberBuild = "1";
+        const numberBuild = "7";
         const canvas = document.querySelector("#unity-canvas");
         const canvasContext = canvas.getContext('2d');
         const maxWidth = 645;
@@ -162,7 +162,7 @@
                 canvas.width = document.documentElement.clientWidth;
                 canvas.height = document.documentElement.clientHeight;
                 var ww = window.screen.width;
-                var mw = 645; // min width of site
+                var mw = maxWidth; // min width of site
                 var ratio = ww / mw; //calculate ratio
                 var viewport_meta_tag = document.getElementById('viewport-site');
                 if (ww < mw) { //smaller than minimum size
