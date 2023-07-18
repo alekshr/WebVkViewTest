@@ -160,7 +160,7 @@
         function SetMaxSize() {
             canvas.width = document.documentElement.clientWidth;
             canvas.height = document.documentElement.clientHeight;
-            ApplyZoom();
+            myGameInstance.SetSize(canvas.width, canvas.height);
         }
 
         function ApplyZoom() {
